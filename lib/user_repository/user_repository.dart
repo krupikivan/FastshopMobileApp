@@ -9,9 +9,9 @@ import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 
 class UserRepository with ChangeNotifier {
-  final String _url = 'http://' + con.getUrl() + '/login.php';
-  final String _url2 = 'http://' + con.getUrl() + '/signup.php';
-  final String _url3 = 'http://' + con.getUrl() + '/validate_token.php';
+  final String _url = 'https://' + con.getUrl() + '/login.php';
+  final String _url2 = 'https://' + con.getUrl() + '/signup.php';
+  final String _url3 = 'https://' + con.getUrl() + '/validate_token.php';
   var headers = {"accept": "application/json"};
 
   Cliente _userData = Cliente();
@@ -40,9 +40,13 @@ class UserRepository with ChangeNotifier {
     };
 
     await Future.delayed(Duration(seconds: 1));
-
-    final response =
-        await http.post(_url, body: jsonEncode(body), headers: headers);
+    var response;
+    try {
+      response =
+          await http.post(_url, body: jsonEncode(body), headers: headers);
+    } catch (e) {
+      print(e);
+    }
 
     if (response.statusCode == 200) {
       Map userMap = jsonDecode(response.body);
