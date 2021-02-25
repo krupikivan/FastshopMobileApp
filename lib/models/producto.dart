@@ -18,23 +18,20 @@ class Producto extends Object {
   final String marca;
   final double precio;
 
-
-
   Producto({
     this.idProducto,
     this.descripcion,
     this.categoria,
     this.marca,
     this.precio,
-
   });
 
   Producto.fromJson(Map<String, dynamic> json)
-   : idProducto = json["idProducto"] as int,
-    descripcion = json["descripcion"],
-    categoria = json["categoria"],
-    marca = json["marca"],
-    precio = json["precio"] as double;
+      : idProducto = json["idProducto"] as int,
+        descripcion = json["descripcion"],
+        categoria = json["categoria"],
+        marca = json["marca"],
+        precio = double.parse(json["precio"].toString());
 
   // Producto.clear()
   //  : idProducto = null,
@@ -43,17 +40,17 @@ class Producto extends Object {
   //   marca = null,
   //   precio = null;
 
-
   Map<String, dynamic> toJson() => {
-    "idProducto": idProducto,
-    "descripcion": descripcion,
-    "categoria": categoria,
-    "marca": marca,
-    "precio": precio,
-  };
+        "idProducto": idProducto,
+        "descripcion": descripcion,
+        "categoria": categoria,
+        "marca": marca,
+        "precio": precio,
+      };
 
   @override
-  bool operator==(Object other) => identical(this, other) || this.hashCode == other.hashCode;
+  bool operator ==(Object other) =>
+      identical(this, other) || this.hashCode == other.hashCode;
 
   @override
   int get hashCode => idProducto;
