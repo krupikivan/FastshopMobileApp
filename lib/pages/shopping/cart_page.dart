@@ -38,7 +38,7 @@ class BlocCartPageState extends State<BlocCartPage> {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                      Text('Vacio', style: Theme.of(context).textTheme.display1),
+                    Text('Vacio', style: Theme.of(context).textTheme.display1),
                     RaisedButton(
                       color: fButtonColor,
                       onPressed: () => scan(cart, _repo),
@@ -165,19 +165,19 @@ class BlocCartPageState extends State<BlocCartPage> {
             ),
             actions: <Widget>[
               StreamBuilder<List<CartItem>>(
-                stream: _cartBloc.items,
-                builder: (context, snapshot) {
-                  return FlatButton(
-                      onPressed: () {
-                        //Borra el carrito de compras
-                        snapshot.data.forEach((element) { 
-                          _cartBloc.cartAddition.add(CartAddition(element.product, -element.count));
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: Text('Finalizar'));
-                }
-              ),
+                  stream: _cartBloc.items,
+                  builder: (context, snapshot) {
+                    return FlatButton(
+                        onPressed: () {
+                          //Borra el carrito de compras
+                          snapshot.data.forEach((element) {
+                            _cartBloc.cartAddition.add(
+                                CartAddition(element.product, -element.count));
+                          });
+                          Navigator.pop(context);
+                        },
+                        child: Text('Finalizar'));
+                  }),
               FlatButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -190,12 +190,11 @@ class BlocCartPageState extends State<BlocCartPage> {
 
   Future scan(CartBloc _cartBloc, ProductoRepository _repo) async {
     try {
-      // String barcode = await BarcodeScanner.scan();
-      String barcode = '1';
-      //TODO arreglar e implementar bloc en esta parte
+      String barcode = await BarcodeScanner.scan();
+      // String barcode = '1';
+      print(barcode);
       Producto producto = await _repo.fetchProductScanned(barcode);
       _cartBloc.cartAddition.add(CartAddition(producto));
-      //TODO arreglar e implementar bloc en esta parte
       // setState(() {
       //   this.barcode = barcode;
       //   bloc.addScanProduct(barcode);
