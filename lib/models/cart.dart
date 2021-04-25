@@ -25,7 +25,6 @@ class Cart {
   /// each product once, regardless of how many are being bought.
   int get itemCount => _items.fold(0, (sum, el) => sum + el.count);
 
-
   /// The total price of items in the cart
   double get itemTotalPrice => _items.fold(0, (sum, el) => sum + el.totalPrice);
 

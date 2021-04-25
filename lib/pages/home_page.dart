@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:fastshop_mobile/bloc_helpers/bloc_provider.dart';
+import 'package:fastshop_mobile/blocs/cart/cart_bloc.dart';
 import 'package:fastshop_mobile/blocs/home/promo_bloc.dart';
 import 'package:fastshop_mobile/functions/getUsername.dart';
 import 'package:fastshop_mobile/models/promocion.dart';
@@ -42,7 +44,7 @@ class HomePageSample extends State<HomePage>
   void initState() {
     super.initState();
     timer =
-        Timer.periodic(Duration(seconds: 13), (Timer t) => bloc.fetchAllTodo());
+        Timer.periodic(Duration(seconds: 30), (Timer t) => bloc.fetchAllTodo());
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = new IOSInitializationSettings();
@@ -139,16 +141,18 @@ class HomePageSample extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     var userData = Provider.of<UserRepository>(context);
+    final _cartBloc = BlocProvider.of<CartBloc>(context);
     print('Usuario logueado: ${userData.userData.idCliente}');
     return WillPopScope(
       onWillPop: _onWillPopScope,
       child: DefaultTabController(
         length: 4,
         initialIndex: widget.index,
-        child: StreamBuilder(
+        child: StreamBuilder<List<Promocion>>(
             stream: bloc.allTodo,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
+                _cartBloc.addPromos.add(snapshot.data);
                 _showNotification(snapshot.data);
               }
               return Scaffold(

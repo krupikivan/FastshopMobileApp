@@ -4,6 +4,7 @@ import 'package:fastshop_mobile/bloc_helpers/bloc_provider.dart';
 import 'package:fastshop_mobile/models/cart.dart';
 import 'package:fastshop_mobile/models/cartItem.dart';
 import 'package:fastshop_mobile/models/producto.dart';
+import 'package:fastshop_mobile/models/promocion.dart';
 import 'package:rxdart/subjects.dart';
 
 class CartAddition {
@@ -22,6 +23,9 @@ class CartBloc implements BlocBase {
   final BehaviorSubject<List<CartItem>> _items =
       BehaviorSubject<List<CartItem>>.seeded([]);
 
+  final BehaviorSubject<List<Promocion>> _promos =
+      BehaviorSubject<List<Promocion>>.seeded([]);
+
   final BehaviorSubject<int> _itemCount = BehaviorSubject<int>.seeded(0);
 
   final StreamController<double> _itemTotalPrice =
@@ -36,11 +40,15 @@ class CartBloc implements BlocBase {
   CartBloc() {
     _cartAdditionController.stream.listen((addition) {
       int currentCount = _cart.itemCount;
-      double currentTotalPrice = _cart.itemTotalPrice;
+      // double currentTotalPrice = _cart.itemTotalPrice;
       _cart.add(addition.product, addition.count);
       _items.add(_cart.items);
       int updatedCount = _cart.itemCount;
-      double updatedTotalPrice = _cart.itemTotalPrice;
+      double currentTotalPrice =
+          _calculateTotalPrice(_cart, _promos.stream.value);
+      // double updatedTotalPrice = _cart.itemTotalPrice;
+      double updatedTotalPrice =
+          _calculateTotalPrice(_cart, _promos.stream.value);
       if (updatedCount != currentCount ||
           updatedTotalPrice != currentTotalPrice) {
         _itemCount.add(updatedCount);
@@ -49,11 +57,15 @@ class CartBloc implements BlocBase {
     });
     _cartUpdateController.stream.listen((addition) {
       int currentCount = _cart.itemCount;
-      double currentTotalPrice = _cart.itemTotalPrice;
+      // double currentTotalPrice = _cart.itemTotalPrice;
       _cart.update(addition.product, addition.count);
       _items.add(_cart.items);
       int updatedCount = _cart.itemCount;
-      double updatedTotalPrice = _cart.itemTotalPrice;
+      double currentTotalPrice =
+          _calculateTotalPrice(_cart, _promos.stream.value);
+      // double updatedTotalPrice = _cart.itemTotalPrice;
+      double updatedTotalPrice =
+          _calculateTotalPrice(_cart, _promos.stream.value);
       if (updatedCount != currentCount ||
           updatedTotalPrice != currentTotalPrice) {
         _itemCount.add(updatedCount);
@@ -62,7 +74,28 @@ class CartBloc implements BlocBase {
     });
   }
 
+  double _calculateTotalPrice(Cart cart, List<Promocion> list) {
+    double total = 0;
+    cart.items.forEach((e) {
+      bool isPromo =
+          list.where((p) => p.producto == e.product.descripcion).isNotEmpty;
+      print('La cantidad es: ' + e.count.toString());
+      if (isPromo && e.count > 1) {
+        if (e.count % 2 == 0) {
+          total += e.product.precio * e.count * 0.5;
+        } else {
+          total += (e.product.precio * (e.count - 1) * 0.5) + e.product.precio;
+        }
+      } else {
+        total += e.product.precio;
+      }
+    });
+    return total;
+  }
+
   Sink<CartAddition> get cartAddition => _cartAdditionController.sink;
+
+  Sink<List<Promocion>> get addPromos => _promos.sink;
 
   Sink<CartAddition> get cartUpdate => _cartUpdateController.sink;
 
