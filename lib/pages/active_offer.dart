@@ -3,10 +3,7 @@ import 'package:fastshop_mobile/models/models.dart';
 import 'package:fastshop_mobile/widgets/promo_card_widget.dart';
 import 'package:flutter/material.dart';
 
-
-
 class ActiveOfferPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     bloc.fetchAllTodo();
@@ -18,11 +15,14 @@ class ActiveOfferPage extends StatelessWidget {
         builder: (context, AsyncSnapshot<List<Promocion>> snapshot) {
           if (snapshot.hasData) {
             //Aca largamos la lista a la pantalla
-            return buildList(snapshot);
+            return snapshot.data.length == 0
+                ? Center(child: Text('No hay promociones'))
+                : buildList(snapshot);
           } else if (snapshot.hasError) {
             return Text('Error es:${snapshot.error}');
+          } else {
+            return Center(child: CircularProgressIndicator());
           }
-          return Center(child: CircularProgressIndicator());
         },
       ),
     );
@@ -31,17 +31,21 @@ class ActiveOfferPage extends StatelessWidget {
   Widget buildList(AsyncSnapshot<List<Promocion>> snapshot) {
     return GridView.builder(
       itemCount: snapshot.data.length,
-      gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1),
+      gridDelegate:
+          new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
       itemBuilder: (BuildContext context, int index) {
         return InkResponse(
           enableFeedback: true,
-          child: new PromoCard(title: snapshot.data[index].promocion + ' en ' + snapshot.data[index].producto,
-          date: 'Del ' + snapshot.data[index].fechaInicio + ' al ' + snapshot.data[index].fechaFin
-          ),
+          child: new PromoCard(
+              title: snapshot.data[index].promocion +
+                  ' en ' +
+                  snapshot.data[index].producto,
+              date: 'Del ' +
+                  snapshot.data[index].fechaInicio +
+                  ' al ' +
+                  snapshot.data[index].fechaFin),
         );
       },
     );
   }
-
 }

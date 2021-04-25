@@ -44,6 +44,7 @@ class UserRepository with ChangeNotifier {
     try {
       response =
           await http.post(_url, body: jsonEncode(body), headers: headers);
+      print(response);
     } catch (e) {
       print(e);
     }

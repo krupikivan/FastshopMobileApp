@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:fastshop_mobile/blocs/home/promo_bloc.dart';
 import 'package:fastshop_mobile/functions/getUsername.dart';
+import 'package:fastshop_mobile/models/promocion.dart';
 import 'package:fastshop_mobile/pages/active_offer.dart';
 import 'package:fastshop_mobile/pages/category_page.dart';
 import 'package:fastshop_mobile/pages/listados/shop_list_page.dart';
@@ -10,7 +12,11 @@ import 'package:fastshop_mobile/user_repository/user_repository.dart';
 import 'package:fastshop_mobile/widgets/log_out_button.dart';
 import 'package:fastshop_mobile/widgets/shopping_basket.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../preferences.dart';
 
 class HomePage extends StatefulWidget {
   final int index;
@@ -23,7 +29,10 @@ class HomePage extends StatefulWidget {
 class HomePageSample extends State<HomePage>
     with SingleTickerProviderStateMixin {
   var user;
+  final _prefs = Preferences();
 
+  Timer timer;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   // HomePageSample(this.user);
   // Future<void> _getUsername() async {
   //   user = await getUsername();
@@ -32,16 +41,62 @@ class HomePageSample extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    // if(index == null){
-    //   index = 0;
-    // }
-    // _getUsername();
+    timer =
+        Timer.periodic(Duration(seconds: 13), (Timer t) => bloc.fetchAllTodo());
+    var initializationSettingsAndroid =
+        new AndroidInitializationSettings('app_icon');
+    var initializationSettingsIOS = new IOSInitializationSettings();
+    var initializationSettings = new InitializationSettings(
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: onSelectNotification);
     Future.delayed(Duration(seconds: 2));
+  }
+
+  Future onSelectNotification(String payload) async {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return new AlertDialog(
+          title: Text("Nueva promocion!!!"),
+          content: Text(payload),
+          actions: [
+            ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(), child: Text('Ok'))
+          ],
+        );
+      },
+    );
+  }
+
+  Future _showNotification(List<Promocion> data) async {
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+        'channel_id', 'channel_name', 'channel_description',
+        importance: Importance.max, priority: Priority.high);
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var platformChannelSpecifics = new NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+    if (data.length > _prefs.promoCant) {
+      _prefs.promoCant = data.length;
+      await flutterLocalNotificationsPlugin.show(
+        0,
+        'Nueva Promocion',
+        '${data.last.promocion} - ${data.last.producto}',
+        platformChannelSpecifics,
+        payload:
+            'Tenemos una nueva promocion del producto: ${data.last.producto}',
+      );
+    } else if (data.length < _prefs.promoCant) {
+      _prefs.promoCant = data.length;
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
+    timer?.cancel();
   }
 
   Future<bool> _onWillPopScope() async {
@@ -90,37 +145,46 @@ class HomePageSample extends State<HomePage>
       child: DefaultTabController(
         length: 4,
         initialIndex: widget.index,
-        child: Scaffold(
-            appBar: AppBar(
-              title: Text(userData.userData.nombre),
-              leading: LogOutButton(),
-              actions: <Widget>[
-                InkWell(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      ShoppingBasket(),
+        child: StreamBuilder(
+            stream: bloc.allTodo,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                _showNotification(snapshot.data);
+              }
+              return Scaffold(
+                  appBar: AppBar(
+                    title: Text(userData.userData.nombre),
+                    leading: LogOutButton(),
+                    actions: <Widget>[
+                      InkWell(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            ShoppingBasket(),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/shoppingBasket');
+                        },
+                      ),
                     ],
+                    bottom: _tabBarLabel(),
                   ),
-                  onTap: () {Navigator.of(context).pushNamed('/shoppingBasket');},
-                ),
-              ],
-              bottom: _tabBarLabel(),
-            ),
-            body: Column(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    child: TabBarView(children: <Widget>[
-                      ActiveOfferPage(),
-                      CategoryPage(),
-                      BlocCartPage(),
-                      ShopListPage()
-                    ]),
-                  ),
-                )
-              ],
-            )),
+                  body: Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          child: TabBarView(children: <Widget>[
+                            ActiveOfferPage(),
+                            CategoryPage(),
+                            BlocCartPage(),
+                            ShopListPage()
+                          ]),
+                        ),
+                      )
+                    ],
+                  ));
+            }),
       ),
     );
   }

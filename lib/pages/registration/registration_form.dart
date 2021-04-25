@@ -92,14 +92,14 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
   Widget _buildForm() {
     return Scaffold(
-      resizeToAvoidBottomInset : true,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text('Fastshop - Registrate'),
       ),
       body: new Form(
         child: Container(
           constraints: new BoxConstraints.expand(),
-          padding: EdgeInsets.only(top: 10.0,left: 10.0,right: 10.0),
+          padding: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
           child: SingleChildScrollView(
             child: Container(
               child: Column(
@@ -110,7 +110,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   //NOMBRE
                   StreamBuilder<String>(
                       stream: _registrationFormBloc.nombre,
-                      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
                         return new Container(
                           height: 100.0,
                           child: new ListTile(
@@ -121,8 +122,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                                 fillColor: Colors.white,
                                 border: new OutlineInputBorder(
                                   borderRadius: new BorderRadius.circular(25.0),
-                                  borderSide: new BorderSide(
-                                  ),
+                                  borderSide: new BorderSide(),
                                 ),
                                 errorText: snapshot.error,
                               ),
@@ -137,7 +137,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   //APELLIDO
                   StreamBuilder<String>(
                       stream: _registrationFormBloc.apellido,
-                      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
                         return new Container(
                           height: 100.0,
                           child: new ListTile(
@@ -148,8 +149,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                                 fillColor: Colors.white,
                                 border: new OutlineInputBorder(
                                   borderRadius: new BorderRadius.circular(25.0),
-                                  borderSide: new BorderSide(
-                                  ),
+                                  borderSide: new BorderSide(),
                                 ),
                                 errorText: snapshot.error,
                               ),
@@ -164,7 +164,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   //EMAIL
                   StreamBuilder<String>(
                       stream: _registrationFormBloc.email,
-                      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
                         return new Container(
                           height: 100.0,
                           child: ListTile(
@@ -174,8 +175,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                                 fillColor: Colors.white,
                                 border: new OutlineInputBorder(
                                   borderRadius: new BorderRadius.circular(25.0),
-                                  borderSide: new BorderSide(
-                                  ),
+                                  borderSide: new BorderSide(),
                                 ),
                                 labelText: 'Email',
                                 errorText: snapshot.error,
@@ -191,7 +191,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   //PASSWORD
                   StreamBuilder<String>(
                       stream: _registrationFormBloc.password,
-                      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
                         return new Container(
                           height: 100.0,
                           child: ListTile(
@@ -201,15 +202,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
                                 fillColor: Colors.white,
                                 border: new OutlineInputBorder(
                                   borderRadius: new BorderRadius.circular(25.0),
-                                  borderSide: new BorderSide(
-                                  ),
+                                  borderSide: new BorderSide(),
                                 ),
                                 labelText: 'Contraseña',
                                 errorText: snapshot.error,
                               ),
                               controller: _passController,
                               obscureText: true,
-                              onChanged: _registrationFormBloc.onPasswordChanged,
+                              onChanged:
+                                  _registrationFormBloc.onPasswordChanged,
                             ),
                           ),
                         );
@@ -218,7 +219,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   //RETYPE PASSWORD
                   StreamBuilder<String>(
                       stream: _registrationFormBloc.confirmPassword,
-                      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
                         return new Container(
                           height: 100.0,
                           child: ListTile(
@@ -228,15 +230,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
                                 fillColor: Colors.white,
                                 border: new OutlineInputBorder(
                                   borderRadius: new BorderRadius.circular(25.0),
-                                  borderSide: new BorderSide(
-                                  ),
+                                  borderSide: new BorderSide(),
                                 ),
                                 labelText: 'Repita contraseña',
                                 errorText: snapshot.error,
                               ),
                               controller: _passRetypeController,
                               obscureText: true,
-                              onChanged: _registrationFormBloc.onRetypePasswordChanged,
+                              onChanged:
+                                  _registrationFormBloc.onRetypePasswordChanged,
                             ),
                           ),
                         );
@@ -245,42 +247,46 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   //FORM BLOC
                   StreamBuilder<bool>(
                       stream: _registrationFormBloc.registerValid,
-                      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                        return new ButtonTheme.bar(
-                          child: new ButtonBar(
-                            children: <Widget>[
-                              new SizedBox(
-                                height: 48.0,
-                                child: new RaisedButton(
-                                child: const Text("Registrar", textScaleFactor: 1.5),
-                                color: Colors.white,
-                                elevation: 4.0,
-                                onPressed: /*(snapshot.hasData && snapshot.data == true)
-                                    ? */() {
-                                        _registrationBloc.emitEvent(RegistrationEvent(
-                                            event: RegistrationEventType.working,
+                      builder:
+                          (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                        return new ButtonTheme(
+                          child: new ButtonBar(children: <Widget>[
+                            new SizedBox(
+                              height: 48.0,
+                              child: new ElevatedButton(
+                                  child: const Text("Registrar",
+                                      textScaleFactor: 1.5),
+                                  onPressed:
+                                      /*(snapshot.hasData && snapshot.data == true)
+                                    ? */
+                                      () {
+                                    _registrationBloc.emitEvent(
+                                        RegistrationEvent(
+                                            event:
+                                                RegistrationEventType.working,
                                             nombre: _nombreController.text,
                                             apellido: _apellidoController.text,
                                             email: _emailController.text,
                                             password: _passController.text));
-                                      }
-                                    // : null,
+                                  }
+                                  // : null,
+                                  ),
+                            ),
+                            new SizedBox(
+                              height: 48.0,
+                              child: new RaisedButton(
+                                child:
+                                    const Text("Borrar", textScaleFactor: 1.5),
+                                color: Colors.white,
+                                onPressed: () {
+                                  _clearForm();
+                                },
+                                elevation: 4.0,
                               ),
                             ),
-                              new SizedBox(
-                                height: 48.0,
-                                child:new RaisedButton(
-                                  child: const Text("Borrar", textScaleFactor: 1.5),
-                                  color: Colors.white,
-                                  onPressed: () {_clearForm();},
-                                  elevation: 4.0,
-                                ),
-                              ),
-                            ]
-                          ),
+                          ]),
                         );
-                      }
-                      ),
+                      }),
                 ],
               ),
             ),
@@ -290,7 +296,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     );
   }
 
-  void _clearForm(){
+  void _clearForm() {
     _nombreController.clear();
     _apellidoController.clear();
     _emailController.clear();

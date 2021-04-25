@@ -11,15 +11,15 @@ import 'package:fastshop_mobile/widgets/pending_action.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthenticationPage extends StatelessWidget{
-
+class AuthenticationPage extends StatelessWidget {
   final UserRepository userRepository;
 
   const AuthenticationPage({Key key, this.userRepository}) : super(key: key);
   Future<bool> _onWillPopScope() async {
     return false;
   }
-  build(context){
+
+  build(context) {
     return WillPopScope(
       onWillPop: _onWillPopScope,
       child: Scaffold(
@@ -27,7 +27,7 @@ class AuthenticationPage extends StatelessWidget{
           automaticallyImplyLeading: false,
           title: Text('Iniciar Sesion'),
         ),
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         body: Center(
           child: AuthenticationPageLogin(),
         ),
@@ -69,21 +69,19 @@ class AuthenticationPageLoginState extends State<AuthenticationPageLogin> {
     await preferences.setString('LastScreenRoute', lastRoute);
   }
 
-
   @override
   Widget build(BuildContext context) {
     AuthenticationBloc bloc = BlocProvider.of<AuthenticationBloc>(context);
 
     return Container(
-      child:
-      BlocEventStateBuilder<AuthenticationState>(
+      child: BlocEventStateBuilder<AuthenticationState>(
         bloc: bloc,
         builder: (BuildContext context, AuthenticationState state) {
           if (state.isAuthenticating) {
             return PendingAction();
           }
 
-          if (state.isAuthenticated){
+          if (state.isAuthenticated) {
             return Container();
           }
 
@@ -128,10 +126,15 @@ class AuthenticationPageLoginState extends State<AuthenticationPageLogin> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24),
                   ),
-                  onPressed: () {bloc.emitEvent(AuthenticationEventLogin(email: _emailController.text, password: _passwordController.text));},
+                  onPressed: () {
+                    bloc.emitEvent(AuthenticationEventLogin(
+                        email: _emailController.text,
+                        password: _passwordController.text));
+                  },
                   padding: EdgeInsets.all(10),
                   color: primaryColor,
-                  child: Text('Iniciar Sesion', style: TextStyle(color: Colors.white)),
+                  child: Text('Iniciar Sesion',
+                      style: TextStyle(color: Colors.white)),
                 ),
               ),
             ),
@@ -145,21 +148,23 @@ class AuthenticationPageLoginState extends State<AuthenticationPageLogin> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24),
                   ),
-                  onPressed: () {Navigator.of(context).pushNamed('/register');},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/register');
+                  },
                   padding: EdgeInsets.all(10),
                   color: Colors.white,
-                  child: Text('Registrate con tu mail', style: TextStyle(color: primaryColor)),
+                  child: Text('Registrate con tu mail',
+                      style: TextStyle(color: primaryColor)),
                 ),
               ),
             ),
           );
 
-
-
           // Display a text if the authentication failed
-          if (state.hasFailed){
+          if (state.hasFailed) {
             children.add(
-              Text('Usuario o Contraseña incorrecto!', style: TextStyle(fontSize: 15.0,color: Colors.red)),
+              Text('Usuario o Contraseña incorrecto!',
+                  style: TextStyle(fontSize: 15.0, color: Colors.red)),
             );
           }
 
