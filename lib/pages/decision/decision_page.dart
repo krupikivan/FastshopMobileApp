@@ -1,12 +1,12 @@
-import 'package:fastshop_mobile/bloc_helpers/bloc_provider.dart';
-import 'package:fastshop_mobile/bloc_widgets/bloc_state_builder.dart';
-import 'package:fastshop_mobile/blocs/authentication/authentication_bloc.dart';
-import 'package:fastshop_mobile/blocs/authentication/authentication_event.dart';
-import 'package:fastshop_mobile/blocs/authentication/authentication_state.dart';
-import 'package:fastshop_mobile/pages/authentication/authentication_page.dart';
-import 'package:fastshop_mobile/pages/home_page.dart';
+import 'package:fastshop/bloc_helpers/bloc_provider.dart';
+import 'package:fastshop/bloc_widgets/bloc_state_builder.dart';
+import 'package:fastshop/blocs/authentication/authentication_bloc.dart';
+import 'package:fastshop/blocs/authentication/authentication_event.dart';
+import 'package:fastshop/blocs/authentication/authentication_state.dart';
+import 'package:fastshop/pages/authentication/authentication_page.dart';
+import 'package:fastshop/pages/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:fastshop_mobile/user_repository/user_repository.dart';
+import 'package:fastshop/user_repository/user_repository.dart';
 
 class DecisionPage extends StatefulWidget {
   //Para el username
@@ -29,14 +29,21 @@ class DecisionPageState extends State<DecisionPage> {
   @override
   Widget build(BuildContext context) {
     AuthenticationBloc bloc = BlocProvider.of<AuthenticationBloc>(context);
-    if(bloc.userRepository.token!=""){bloc.emitEvent(AuthenticationEventCheckingToken(token: bloc.userRepository.token));}
+    if (bloc.userRepository.token != "") {
+      bloc.emitEvent(
+          AuthenticationEventCheckingToken(token: bloc.userRepository.token));
+    }
     return BlocEventStateBuilder<AuthenticationState>(
         bloc: bloc,
         builder: (BuildContext context, AuthenticationState state) {
           if (state != oldAuthenticationState) {
             oldAuthenticationState = state;
             if (state.isAuthenticated) {
-              _redirectToPage(context, HomePage(index: 0,));
+              _redirectToPage(
+                  context,
+                  HomePage(
+                    index: 0,
+                  ));
               // )
               // );
             } else if (state.isAuthenticating || state.hasFailed) {

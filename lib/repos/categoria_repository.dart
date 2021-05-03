@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:fastshop_mobile/models/models.dart';
-import 'package:fastshop_mobile/repos/categoria_provider.dart';
+import 'package:fastshop/models/models.dart';
+import 'package:fastshop/repos/categoria_provider.dart';
 
-class CategoriaRepository{
-
+class CategoriaRepository {
   //---------------CATEGORIA------------------------------------------
   //final title = '';
   final categoriaProvider = CategoriaProvider();

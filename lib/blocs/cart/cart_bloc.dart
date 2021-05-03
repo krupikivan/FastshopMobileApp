@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:fastshop_mobile/bloc_helpers/bloc_provider.dart';
-import 'package:fastshop_mobile/models/cart.dart';
-import 'package:fastshop_mobile/models/cartItem.dart';
-import 'package:fastshop_mobile/models/producto.dart';
-import 'package:fastshop_mobile/models/promocion.dart';
+import 'package:fastshop/bloc_helpers/bloc_provider.dart';
+import 'package:fastshop/models/cart.dart';
+import 'package:fastshop/models/cartItem.dart';
+import 'package:fastshop/models/producto.dart';
+import 'package:fastshop/models/promocion.dart';
 import 'package:rxdart/subjects.dart';
 
 class CartAddition {

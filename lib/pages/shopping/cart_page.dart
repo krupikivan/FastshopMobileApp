@@ -1,9 +1,9 @@
 import 'package:barcode_scan/barcode_scan.dart';
-import 'package:fastshop_mobile/bloc_helpers/bloc_provider.dart';
-import 'package:fastshop_mobile/blocs/cart/cart_bloc.dart';
-import 'package:fastshop_mobile/design/colors.dart';
-import 'package:fastshop_mobile/models/producto.dart';
-import 'package:fastshop_mobile/repos/producto_repository.dart';
+import 'package:fastshop/bloc_helpers/bloc_provider.dart';
+import 'package:fastshop/blocs/cart/cart_bloc.dart';
+import 'package:fastshop/design/colors.dart';
+import 'package:fastshop/models/producto.dart';
+import 'package:fastshop/repos/producto_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:ui';
@@ -11,8 +11,8 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fastshop_mobile/models/cartItem.dart';
-import 'package:fastshop_mobile/widgets/cart_item_widget.dart';
+import 'package:fastshop/models/cartItem.dart';
+import 'package:fastshop/widgets/cart_item_widget.dart';
 
 class BlocCartPage extends StatefulWidget {
   BlocCartPage();

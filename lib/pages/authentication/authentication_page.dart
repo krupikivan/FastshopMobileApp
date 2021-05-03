@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:fastshop_mobile/bloc_helpers/bloc_provider.dart';
-import 'package:fastshop_mobile/bloc_widgets/bloc_state_builder.dart';
-import 'package:fastshop_mobile/blocs/authentication/authentication_bloc.dart';
-import 'package:fastshop_mobile/blocs/authentication/authentication_event.dart';
-import 'package:fastshop_mobile/blocs/authentication/authentication_state.dart';
-import 'package:fastshop_mobile/design/colors.dart';
-import 'package:fastshop_mobile/user_repository/user_repository.dart';
-import 'package:fastshop_mobile/widgets/pending_action.dart';
+import 'package:fastshop/bloc_helpers/bloc_provider.dart';
+import 'package:fastshop/bloc_widgets/bloc_state_builder.dart';
+import 'package:fastshop/blocs/authentication/authentication_bloc.dart';
+import 'package:fastshop/blocs/authentication/authentication_event.dart';
+import 'package:fastshop/blocs/authentication/authentication_state.dart';
+import 'package:fastshop/design/colors.dart';
+import 'package:fastshop/user_repository/user_repository.dart';
+import 'package:fastshop/widgets/pending_action.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -1,5 +1,5 @@
-import 'package:fastshop_mobile/application.dart';
-import 'package:fastshop_mobile/preferences.dart';
+import 'package:fastshop/application.dart';
+import 'package:fastshop/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';

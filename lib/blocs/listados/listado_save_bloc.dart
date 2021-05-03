@@ -1,29 +1,26 @@
 import 'dart:async';
 
-import 'package:fastshop_mobile/bloc_helpers/bloc_event_state.dart';
-import 'package:fastshop_mobile/blocs/listados/listado_event.dart';
-import 'package:fastshop_mobile/blocs/listados/listado_state.dart';
-import 'package:fastshop_mobile/repos/listado_provider.dart';
+import 'package:fastshop/bloc_helpers/bloc_event_state.dart';
+import 'package:fastshop/blocs/listados/listado_event.dart';
+import 'package:fastshop/blocs/listados/listado_state.dart';
+import 'package:fastshop/repos/listado_provider.dart';
 
 class ListSaveBloc extends BlocEventStateBase<ListSave, ListadoState> {
-
-
   ListSaveBloc()
       : super(
           initialState: ListadoState.noAction(),
         );
 
   @override
-  Stream<ListadoState> eventHandler(ListSave event, ListadoState currentState) async* {
-    if (event.event == ListadoEventType.savingList){
+  Stream<ListadoState> eventHandler(
+      ListSave event, ListadoState currentState) async* {
+    if (event.event == ListadoEventType.savingList) {
       yield ListadoState.savingList();
 
-
       ListadoProvider listadoProvider = new ListadoProvider();
-      try{
-
+      try {
         await listadoProvider.addList(event.name, event.selected, event.user);
-      }catch (error) {
+      } catch (error) {
         yield ListadoState.failure();
       }
 

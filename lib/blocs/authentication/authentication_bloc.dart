@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:fastshop_mobile/functions/saveLogout.dart';
-import 'package:fastshop_mobile/models/cliente.dart';
+import 'package:fastshop/functions/saveLogout.dart';
+import 'package:fastshop/models/cliente.dart';
 import 'package:meta/meta.dart';
-import 'package:fastshop_mobile/user_repository/user_repository.dart';
-import 'package:fastshop_mobile/bloc_helpers/bloc_event_state.dart';
-import 'package:fastshop_mobile/blocs/authentication/authentication_event.dart';
-import 'package:fastshop_mobile/blocs/authentication/authentication_state.dart';
+import 'package:fastshop/user_repository/user_repository.dart';
+import 'package:fastshop/bloc_helpers/bloc_event_state.dart';
+import 'package:fastshop/blocs/authentication/authentication_event.dart';
+import 'package:fastshop/blocs/authentication/authentication_state.dart';
 
 class AuthenticationBloc
     extends BlocEventStateBase<AuthenticationEvent, AuthenticationState> {
@@ -21,7 +21,6 @@ class AuthenticationBloc
   @override
   Stream<AuthenticationState> eventHandler(
       AuthenticationEvent event, AuthenticationState currentState) async* {
-
     if (event is AuthenticationEventLogin) {
       // Inform that we are proceeding with the authentication
       yield AuthenticationState.authenticating();

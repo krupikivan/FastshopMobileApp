@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'dart:math';
-import 'package:fastshop_mobile/models/cartItem.dart';
-import 'package:fastshop_mobile/models/producto.dart';
+import 'package:fastshop/models/cartItem.dart';
+import 'package:fastshop/models/producto.dart';
 
 class Cart {
   final List<CartItem> _items = <CartItem>[];

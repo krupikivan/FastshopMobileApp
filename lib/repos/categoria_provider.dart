@@ -1,20 +1,18 @@
-import 'package:fastshop_mobile/connection.dart';
-import 'package:fastshop_mobile/models/models.dart';
+import 'package:fastshop/connection.dart';
+import 'package:fastshop/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' show Client;
 import 'dart:async';
 
 class CategoriaProvider {
-
   Client client = Client();
-  final _url = 'http://'+con.getUrl()+'/categoria/read.php';
+  final _url = 'http://' + con.getUrl() + '/categoria/read.php';
 
   Future<List<Categoria>> fetchTodoList() async {
     final response = await client.get(_url);
     if (response.statusCode == 200) {
       print(response.body);
       return compute(categoriaFromJson, response.body);
-
     } else {
       throw Exception('Error en carga');
     }
@@ -41,4 +39,3 @@ class CategoriaProvider {
   }*/
 
 }
-

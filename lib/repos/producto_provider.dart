@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:fastshop_mobile/connection.dart';
-import 'package:fastshop_mobile/models/models.dart';
+import 'package:fastshop/connection.dart';
+import 'package:fastshop/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' show Client;
 import 'dart:async';

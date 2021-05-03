@@ -1,6 +1,6 @@
-import 'package:fastshop_mobile/bloc_helpers/bloc_provider.dart';
-import 'package:fastshop_mobile/blocs/authentication/authentication_bloc.dart';
-import 'package:fastshop_mobile/blocs/authentication/authentication_event.dart';
+import 'package:fastshop/bloc_helpers/bloc_provider.dart';
+import 'package:fastshop/blocs/authentication/authentication_bloc.dart';
+import 'package:fastshop/blocs/authentication/authentication_event.dart';
 import 'package:flutter/material.dart';
 
 class LogOutButton extends StatelessWidget {

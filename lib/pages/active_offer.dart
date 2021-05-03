@@ -1,6 +1,6 @@
-import 'package:fastshop_mobile/blocs/home/promo_bloc.dart';
-import 'package:fastshop_mobile/models/models.dart';
-import 'package:fastshop_mobile/widgets/promo_card_widget.dart';
+import 'package:fastshop/blocs/home/promo_bloc.dart';
+import 'package:fastshop/models/models.dart';
+import 'package:fastshop/widgets/promo_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class ActiveOfferPage extends StatelessWidget {
@@ -16,7 +16,9 @@ class ActiveOfferPage extends StatelessWidget {
           if (snapshot.hasData) {
             //Aca largamos la lista a la pantalla
             return snapshot.data.length == 0
-                ? Center(child: Text('No hay promociones'))
+                ? Center(
+                    child: Text('Sin promociones',
+                        style: Theme.of(context).textTheme.display1))
                 : buildList(snapshot);
           } else if (snapshot.hasError) {
             return Text('Error es:${snapshot.error}');
@@ -32,18 +34,11 @@ class ActiveOfferPage extends StatelessWidget {
     return GridView.builder(
       itemCount: snapshot.data.length,
       gridDelegate:
-          new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
+          new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemBuilder: (BuildContext context, int index) {
         return InkResponse(
           enableFeedback: true,
-          child: new PromoCard(
-              title: snapshot.data[index].promocion +
-                  ' en ' +
-                  snapshot.data[index].producto,
-              date: 'Del ' +
-                  snapshot.data[index].fechaInicio +
-                  ' al ' +
-                  snapshot.data[index].fechaFin),
+          child: new PromoCard(promocion: snapshot.data[index]),
         );
       },
     );

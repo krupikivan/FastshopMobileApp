@@ -1,4 +1,4 @@
-import 'package:fastshop_mobile/models/producto.dart';
+import 'package:fastshop/models/producto.dart';
 
 class CartItem {
   final int count;
@@ -7,8 +7,7 @@ class CartItem {
   const CartItem(this.count, this.product);
 
   double get totalPrice => count * product.precio;
-  
+
   @override
   String toString() => "${product.descripcion}: \$$count";
-  
 }

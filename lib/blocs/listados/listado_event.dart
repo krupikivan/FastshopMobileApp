@@ -1,13 +1,10 @@
-import 'package:fastshop_mobile/bloc_helpers/bloc_event_state.dart';
-import 'package:fastshop_mobile/models/cliente.dart';
+import 'package:fastshop/bloc_helpers/bloc_event_state.dart';
+import 'package:fastshop/models/cliente.dart';
 import 'package:meta/meta.dart';
 
-
 class ListDelete extends BlocEvent {
-
   final ListadoEventType event;
   final String idList;
-
 
   ListDelete({
     @required this.event,
@@ -16,12 +13,10 @@ class ListDelete extends BlocEvent {
 }
 
 class ListSave extends BlocEvent {
-
   final ListadoEventType event;
   final String name;
   final List selected;
   final Cliente user;
-
 
   ListSave({
     @required this.event,

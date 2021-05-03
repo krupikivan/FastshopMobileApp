@@ -1,5 +1,5 @@
-import 'package:fastshop_mobile/models/models.dart';
-import 'package:fastshop_mobile/repos/categoria_repository.dart';
+import 'package:fastshop/models/models.dart';
+import 'package:fastshop/repos/categoria_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CategoryBloc {
@@ -15,7 +15,7 @@ class CategoryBloc {
   }
 
   //El ASYNC soluciono el tema de cambiar de pestaña y volver para que siga estando
-  dispose() async{
+  dispose() async {
     //Cerramos los stream para que no gaste recursos cuando no se estan usando
     await _todoFetcher.drain();
     _todoFetcher.close();

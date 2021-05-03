@@ -1,4 +1,4 @@
-import 'package:fastshop_mobile/bloc_helpers/bloc_event_state.dart';
+import 'package:fastshop/bloc_helpers/bloc_event_state.dart';
 
 class RegistrationState extends BlocState {
   RegistrationState({
@@ -15,16 +15,21 @@ class RegistrationState extends BlocState {
     return RegistrationState();
   }
 
-  factory RegistrationState.busy(){
-    return RegistrationState(isBusy: true,);
+  factory RegistrationState.busy() {
+    return RegistrationState(
+      isBusy: true,
+    );
   }
 
-  factory RegistrationState.success(){
-    return RegistrationState(isSuccess: true,);
+  factory RegistrationState.success() {
+    return RegistrationState(
+      isSuccess: true,
+    );
   }
 
-  factory RegistrationState.failure(){
-    return RegistrationState(isFailure: true,);
+  factory RegistrationState.failure() {
+    return RegistrationState(
+      isFailure: true,
+    );
   }
-
 }

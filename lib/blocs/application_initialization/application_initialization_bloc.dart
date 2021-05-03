@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:fastshop_mobile/bloc_helpers/bloc_event_state.dart';
-import 'package:fastshop_mobile/blocs/application_initialization/application_initialization_event.dart';
-import 'package:fastshop_mobile/blocs/application_initialization/application_initialization_state.dart';
+import 'package:fastshop/bloc_helpers/bloc_event_state.dart';
+import 'package:fastshop/blocs/application_initialization/application_initialization_event.dart';
+import 'package:fastshop/blocs/application_initialization/application_initialization_state.dart';
 
-class ApplicationInitializationBloc
-    extends BlocEventStateBase<ApplicationInitializationEvent, ApplicationInitializationState> {
+class ApplicationInitializationBloc extends BlocEventStateBase<
+    ApplicationInitializationEvent, ApplicationInitializationState> {
   ApplicationInitializationBloc()
       : super(
           initialState: ApplicationInitializationState.notInitialized(),
@@ -13,20 +13,20 @@ class ApplicationInitializationBloc
 
   @override
   Stream<ApplicationInitializationState> eventHandler(
-      ApplicationInitializationEvent event, ApplicationInitializationState currentState) async* {
-    
-    if (!currentState.isInitialized){
+      ApplicationInitializationEvent event,
+      ApplicationInitializationState currentState) async* {
+    if (!currentState.isInitialized) {
       yield ApplicationInitializationState.notInitialized();
     }
 
     if (event.type == ApplicationInitializationEventType.start) {
-      for (int progress = 0; progress < 101; progress += 10){
+      for (int progress = 0; progress < 101; progress += 10) {
         await Future.delayed(const Duration(milliseconds: 300));
         yield ApplicationInitializationState.progressing(progress);
       }
     }
 
-    if (event.type == ApplicationInitializationEventType.initialized){
+    if (event.type == ApplicationInitializationEventType.initialized) {
       yield ApplicationInitializationState.initialized();
     }
   }

@@ -1,4 +1,4 @@
-import 'package:fastshop_mobile/bloc_helpers/bloc_event_state.dart';
+import 'package:fastshop/bloc_helpers/bloc_event_state.dart';
 
 class ListadoState extends BlocState {
   ListadoState({
@@ -17,20 +17,27 @@ class ListadoState extends BlocState {
     return ListadoState();
   }
 
-  factory ListadoState.running(){
-    return ListadoState(isRunning: true,);
+  factory ListadoState.running() {
+    return ListadoState(
+      isRunning: true,
+    );
   }
 
-  factory ListadoState.savingList(){
-    return ListadoState(isSavingList: true,);
+  factory ListadoState.savingList() {
+    return ListadoState(
+      isSavingList: true,
+    );
   }
 
-  factory ListadoState.success(){
-    return ListadoState(isSuccess: true,);
+  factory ListadoState.success() {
+    return ListadoState(
+      isSuccess: true,
+    );
   }
 
-  factory ListadoState.failure(){
-    return ListadoState(isFailure: true,);
+  factory ListadoState.failure() {
+    return ListadoState(
+      isFailure: true,
+    );
   }
-
 }

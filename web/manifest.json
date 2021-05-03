@@ -1,6 +1,6 @@
 {
-    "name": "fastshop_mobile",
-    "short_name": "fastshop_mobile",
+    "name": "fastshop",
+    "short_name": "fastshop",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",

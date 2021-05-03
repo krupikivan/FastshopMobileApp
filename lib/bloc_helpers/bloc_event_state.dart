@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import 'package:fastshop_mobile/bloc_helpers/bloc_provider.dart';
+import 'package:fastshop/bloc_helpers/bloc_provider.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class BlocEvent extends Object {}
+
 abstract class BlocState extends Object {}
 
 abstract class BlocEventStateBase<BlocEvent, BlocState> implements BlocBase {
@@ -15,7 +16,7 @@ abstract class BlocEventStateBase<BlocEvent, BlocState> implements BlocBase {
   /// To be invoked to emit an event
   ///
   Function(BlocEvent) get emitEvent => _eventController.sink.add;
-  
+
   ///
   /// Current/New state
   ///
@@ -41,14 +42,14 @@ abstract class BlocEventStateBase<BlocEvent, BlocState> implements BlocBase {
   //
   BlocEventStateBase({
     @required this.initialState,
-  }){
+  }) {
     //
     // For each received event, we invoke the [eventHandler] and
     // emit any resulting newState
     //
-    _eventController.listen((BlocEvent event){
+    _eventController.listen((BlocEvent event) {
       BlocState currentState = lastState ?? initialState;
-      eventHandler(event, currentState).forEach((BlocState newState){
+      eventHandler(event, currentState).forEach((BlocState newState) {
         _stateController.sink.add(newState);
       });
     });

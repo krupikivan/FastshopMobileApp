@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:fastshop_mobile/connection.dart';
-import 'package:fastshop_mobile/functions/getUserData.dart';
-import 'package:fastshop_mobile/functions/saveCurrentLogin.dart';
-import 'package:fastshop_mobile/functions/savelogout.dart';
-import 'package:fastshop_mobile/models/cliente.dart';
+import 'package:fastshop/connection.dart';
+import 'package:fastshop/functions/getUserData.dart';
+import 'package:fastshop/functions/saveCurrentLogin.dart';
+import 'package:fastshop/functions/savelogout.dart';
+import 'package:fastshop/models/cliente.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;

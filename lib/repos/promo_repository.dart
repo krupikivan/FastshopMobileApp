@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:fastshop_mobile/models/models.dart';
-import 'package:fastshop_mobile/repos/promo_provider.dart';
+import 'package:fastshop/models/models.dart';
+import 'package:fastshop/repos/promo_provider.dart';
 
-class PromoRepository{
-
+class PromoRepository {
   //---------------PROMOCION------------------------------------------
   //final title = '';
   final promoProvider = PromoProvider();

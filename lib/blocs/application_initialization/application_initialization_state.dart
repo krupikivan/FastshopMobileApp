@@ -1,4 +1,4 @@
-import 'package:fastshop_mobile/bloc_helpers/bloc_event_state.dart';
+import 'package:fastshop/bloc_helpers/bloc_event_state.dart';
 import 'package:meta/meta.dart';
 
 class ApplicationInitializationState extends BlocState {

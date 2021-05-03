@@ -1,7 +1,6 @@
-import 'package:fastshop_mobile/bloc_helpers/bloc_event_state.dart';
+import 'package:fastshop/bloc_helpers/bloc_event_state.dart';
 
 class ApplicationInitializationEvent extends BlocEvent {
-  
   final ApplicationInitializationEventType type;
 
   ApplicationInitializationEvent({

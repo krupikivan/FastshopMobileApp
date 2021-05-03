@@ -1,12 +1,12 @@
-import 'package:fastshop_mobile/design/colors.dart';
-import 'package:fastshop_mobile/functions/getUsername.dart';
-import 'package:fastshop_mobile/models/models.dart';
-import 'package:fastshop_mobile/user_repository/user_repository.dart';
+import 'package:fastshop/design/colors.dart';
+import 'package:fastshop/functions/getUsername.dart';
+import 'package:fastshop/models/models.dart';
+import 'package:fastshop/user_repository/user_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fastshop_mobile/blocs/listados/listado_bloc.dart';
+import 'package:fastshop/blocs/listados/listado_bloc.dart';
 
-import 'package:fastshop_mobile/pages/listados/shop_details_list_page.dart';
+import 'package:fastshop/pages/listados/shop_details_list_page.dart';
 import 'package:provider/provider.dart';
 
 class ShopListPage extends StatelessWidget {
@@ -28,7 +28,9 @@ class ShopListPage extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text('Error es:${snapshot.error}');
         }
-        return Center(child:Text('Sin listados', style: Theme.of(context).textTheme.display1),);
+        return Center(
+            child: Text('Sin listados',
+                style: Theme.of(context).textTheme.display1));
       },
     );
     //floatingActionButton: FloatingActionButton.extended(onPressed: null, backgroundColor: Colors.blueAccent, icon: Icon(Icons.add), label: Text('Nuevo'))
@@ -38,7 +40,7 @@ class ShopListPage extends StatelessWidget {
     return GridView.builder(
       itemCount: snapshot.data.length,
       gridDelegate:
-      new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+          new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       itemBuilder: (BuildContext context, int index) {
         return InkResponse(
             enableFeedback: true,
@@ -49,10 +51,12 @@ class ShopListPage extends StatelessWidget {
                   //new Image.network(snapshot.data[index].uri, fit: BoxFit.cover),
                   Padding(
                       padding:
-                      EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0),
+                          EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0),
                       child: new Text(snapshot.data[index].nombre,
                           style: new TextStyle(
-                              fontSize: 15.0, fontWeight: FontWeight.bold, color: Colors.black45))),
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black45))),
                 ],
               ),
               semanticContainer: true,
@@ -64,7 +68,8 @@ class ShopListPage extends StatelessWidget {
               elevation: 5,
             ),
             onTap: () {
-              Navigator.push( context,
+              Navigator.push(
+                context,
                 MaterialPageRoute(
                   builder: (context) => ShopDetailsListPage(
                       nombre: snapshot.data[index].nombre,

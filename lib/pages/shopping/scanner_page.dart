@@ -1,13 +1,12 @@
-import 'package:fastshop_mobile/bloc_helpers/bloc_provider.dart';
-import 'package:fastshop_mobile/blocs/cart/cart_bloc.dart';
-import 'package:fastshop_mobile/models/producto.dart';
-import 'package:fastshop_mobile/repos/producto_repository.dart';
+import 'package:fastshop/bloc_helpers/bloc_provider.dart';
+import 'package:fastshop/blocs/cart/cart_bloc.dart';
+import 'package:fastshop/models/producto.dart';
+import 'package:fastshop/repos/producto_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 
 class ScannerPage extends StatefulWidget {
-
   @override
   _ScannerPageState createState() => new _ScannerPageState();
 }
@@ -21,6 +20,7 @@ class _ScannerPageState extends State<ScannerPage> {
   initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     CartBloc _cartBloc = BlocProvider.of<CartBloc>(context);
@@ -30,13 +30,26 @@ class _ScannerPageState extends State<ScannerPage> {
           minWidth: 150.0,
           height: 50.0,
           child: RaisedButton.icon(
-            icon: Icon(Icons.camera_alt, color: Colors.white,),
-            onPressed: () {Navigator.of(context).pushNamed('/shoppingBasket');},
-            label: Text("Ir al carrito", style: TextStyle(color: Colors.white),),
+            icon: Icon(
+              Icons.camera_alt,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamed('/shoppingBasket');
+            },
+            label: Text(
+              "Ir al carrito",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(onPressed: (){scan(_cartBloc, _repo);}, label: Text('Escanear'), icon: Icon(Icons.camera_alt)),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            scan(_cartBloc, _repo);
+          },
+          label: Text('Escanear'),
+          icon: Icon(Icons.camera_alt)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
@@ -60,10 +73,11 @@ class _ScannerPageState extends State<ScannerPage> {
       } else {
         setState(() => this.barcode = 'Error desconocido: $e');
       }
-    } on FormatException{
-      setState(() => this.barcode = 'null (User returned using the "back"-button before scanning anything. Result)');
+    } on FormatException {
+      setState(() => this.barcode =
+          'null (User returned using the "back"-button before scanning anything. Result)');
     } catch (e) {
       setState(() => this.barcode = 'Error desconocido: $e');
     }
   }
-  }
+}

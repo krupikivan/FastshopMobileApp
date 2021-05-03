@@ -1,9 +1,9 @@
-import 'package:fastshop_mobile/bloc_widgets/bloc_state_builder.dart';
-import 'package:fastshop_mobile/blocs/registration/registration_bloc.dart';
-import 'package:fastshop_mobile/blocs/registration/registration_event.dart';
-import 'package:fastshop_mobile/blocs/registration/registration_form_bloc.dart';
-import 'package:fastshop_mobile/blocs/registration/registration_state.dart';
-import 'package:fastshop_mobile/widgets/pending_action.dart';
+import 'package:fastshop/bloc_widgets/bloc_state_builder.dart';
+import 'package:fastshop/blocs/registration/registration_bloc.dart';
+import 'package:fastshop/blocs/registration/registration_event.dart';
+import 'package:fastshop/blocs/registration/registration_form_bloc.dart';
+import 'package:fastshop/blocs/registration/registration_state.dart';
+import 'package:fastshop/widgets/pending_action.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationForm extends StatefulWidget {

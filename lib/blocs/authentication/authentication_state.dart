@@ -1,4 +1,4 @@
-import 'package:fastshop_mobile/bloc_helpers/bloc_event_state.dart';
+import 'package:fastshop/bloc_helpers/bloc_event_state.dart';
 import 'package:meta/meta.dart';
 
 class AuthenticationState extends BlocState {
@@ -12,7 +12,6 @@ class AuthenticationState extends BlocState {
   final bool isAuthenticating;
   final bool hasFailed;
 
-  
   factory AuthenticationState.notAuthenticated() {
     return AuthenticationState(
       isAuthenticated: false,

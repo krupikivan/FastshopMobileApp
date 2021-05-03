@@ -1,31 +1,28 @@
 import 'dart:async';
 
-import 'package:fastshop_mobile/bloc_helpers/bloc_event_state.dart';
-import 'package:fastshop_mobile/blocs/listados/listado_event.dart';
-import 'package:fastshop_mobile/blocs/listados/listado_state.dart';
-import 'package:fastshop_mobile/repos/listado_provider.dart';
+import 'package:fastshop/bloc_helpers/bloc_event_state.dart';
+import 'package:fastshop/blocs/listados/listado_event.dart';
+import 'package:fastshop/blocs/listados/listado_state.dart';
+import 'package:fastshop/repos/listado_provider.dart';
 
 class ListadoDeleteBloc extends BlocEventStateBase<ListDelete, ListadoState> {
-
-
   ListadoDeleteBloc()
       : super(
           initialState: ListadoState.noAction(),
         );
 
   @override
-  Stream<ListadoState> eventHandler(ListDelete event, ListadoState currentState) async* {
-    if (event.event == ListadoEventType.working){
+  Stream<ListadoState> eventHandler(
+      ListDelete event, ListadoState currentState) async* {
+    if (event.event == ListadoEventType.working) {
       yield ListadoState.running();
 
-
       ListadoProvider listadoProvider = new ListadoProvider();
-      try{
-
+      try {
         await listadoProvider.deleteUserList(
-            idListado: event.idList,
+          idListado: event.idList,
         );
-      }catch (error) {
+      } catch (error) {
         yield ListadoState.failure();
       }
 
