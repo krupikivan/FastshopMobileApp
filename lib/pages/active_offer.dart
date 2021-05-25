@@ -2,26 +2,23 @@ import 'package:fastshop/blocs/home/promo_bloc.dart';
 import 'package:fastshop/models/models.dart';
 import 'package:fastshop/widgets/promo_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ActiveOfferPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    bloc.fetchAllTodo();
     return Scaffold(
-      body: StreamBuilder(
+      body: Consumer<PromoBloc>(
         //Estamos escuchando al stream,
         //cuando el valor sale afuera del stream largamos la lista por pantalla
-        stream: bloc.allTodo,
-        builder: (context, AsyncSnapshot<List<Promocion>> snapshot) {
-          if (snapshot.hasData) {
+        builder: (context, snapshot, _) {
+          if (snapshot.promociones.isNotEmpty) {
             //Aca largamos la lista a la pantalla
-            return snapshot.data.length == 0
+            return snapshot.promociones.length == 0
                 ? Center(
                     child: Text('Sin promociones',
                         style: Theme.of(context).textTheme.display1))
-                : buildList(snapshot);
-          } else if (snapshot.hasError) {
-            return Text('Error es:${snapshot.error}');
+                : buildList(snapshot.promociones);
           } else {
             return Center(child: CircularProgressIndicator());
           }
@@ -30,15 +27,15 @@ class ActiveOfferPage extends StatelessWidget {
     );
   }
 
-  Widget buildList(AsyncSnapshot<List<Promocion>> snapshot) {
+  Widget buildList(List<Promocion> snapshot) {
     return GridView.builder(
-      itemCount: snapshot.data.length,
+      itemCount: snapshot.length,
       gridDelegate:
           new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemBuilder: (BuildContext context, int index) {
         return InkResponse(
           enableFeedback: true,
-          child: new PromoCard(promocion: snapshot.data[index]),
+          child: new PromoCard(promocion: snapshot[index]),
         );
       },
     );

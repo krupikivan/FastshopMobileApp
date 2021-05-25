@@ -1,10 +1,13 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:fastshop/bloc_helpers/bloc_provider.dart';
 import 'package:fastshop/blocs/cart/cart_bloc.dart';
+import 'package:fastshop/blocs/home/promo_bloc.dart';
 import 'package:fastshop/design/colors.dart';
 import 'package:fastshop/models/producto.dart';
+import 'package:fastshop/models/promocion.dart';
 import 'package:fastshop/repos/producto_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:ui';
 import 'dart:async';
@@ -23,7 +26,6 @@ class BlocCartPage extends StatefulWidget {
 class BlocCartPageState extends State<BlocCartPage> {
   String barcode = "";
   String _inputErrorText;
-  String _dataString = "Hello from this QR";
   final _repo = ProductoRepository();
 
   @override
@@ -39,15 +41,18 @@ class BlocCartPageState extends State<BlocCartPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text('Vacio', style: Theme.of(context).textTheme.display1),
-                    RaisedButton(
-                      color: fButtonColor,
-                      onPressed: () => scan(cart, _repo),
-                      child: Text(
-                        "Escanear",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 19,
-                          fontWeight: FontWeight.bold,
+                    Consumer<PromoBloc>(
+                      builder: (context, promoSnap, _) => RaisedButton(
+                        color: fButtonColor,
+                        onPressed: () =>
+                            scan(cart, _repo, promoSnap.promociones),
+                        child: Text(
+                          "Escanear",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -57,15 +62,19 @@ class BlocCartPageState extends State<BlocCartPage> {
               return Container(
                 child: Column(
                   children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.zero,
-                        margin: EdgeInsets.zero,
-                        child: ListView(
-                            children: snapshot.data
-                                .map((item) => ItemTile(item: item))
-                                .toList()),
+                    Consumer<PromoBloc>(
+                      builder: (context, promoSnap, _) => Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.zero,
+                          margin: EdgeInsets.zero,
+                          child: ListView(
+                              children: snapshot.data
+                                  .map((item) => ItemTile(
+                                      item: item,
+                                      promocion: promoSnap.promociones))
+                                  .toList()),
+                        ),
                       ),
                     ),
                     Container(
@@ -106,15 +115,18 @@ class BlocCartPageState extends State<BlocCartPage> {
                             ),
                           ),
                           ListTile(
-                            title: RaisedButton(
-                              color: Colors.green,
-                              onPressed: () => scan(cart, _repo),
-                              child: Text("Escanear",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.bold,
-                                  )),
+                            title: Consumer<PromoBloc>(
+                              builder: (context, promoSnap, _) => RaisedButton(
+                                color: Colors.green,
+                                onPressed: () =>
+                                    scan(cart, _repo, promoSnap.promociones),
+                                child: Text("Escanear",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                              ),
                             ),
                           )
                         ],
@@ -144,7 +156,7 @@ class BlocCartPageState extends State<BlocCartPage> {
                     child: Center(
                       child: RepaintBoundary(
                         child: QrImage(
-                          data: _dataString,
+                          data: "${_cartBloc.toString()}",
                           size: 0.5 * bodyHeight,
                           padding:
                               EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -188,13 +200,36 @@ class BlocCartPageState extends State<BlocCartPage> {
         });
   }
 
-  Future scan(CartBloc _cartBloc, ProductoRepository _repo) async {
+  Future scan(CartBloc _cartBloc, ProductoRepository _repo,
+      List<Promocion> list) async {
     try {
       String barcode = await BarcodeScanner.scan();
       // String barcode = '1';
       print(barcode);
       Producto producto = await _repo.fetchProductScanned(barcode);
       _cartBloc.cartAddition.add(CartAddition(producto));
+      List<int> _list = [];
+      list.forEach((e) => _list.add(e.idProducto));
+      if (_list.isNotEmpty && _list.contains(producto.idProducto)) {
+        _cartBloc.setPromoItem(producto);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Producto con Promocion!'),
+                content: Text(
+                    'El producto escaneado ${producto.descripcion} tiene promocion asignada de tipo ${list.firstWhere((e) => e.idProducto == producto.idProducto).promocion}'),
+                actions: <Widget>[
+                  FlatButton(
+                    child: const Text('Ok'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            });
+      }
       // setState(() {
       //   this.barcode = barcode;
       //   bloc.addScanProduct(barcode);

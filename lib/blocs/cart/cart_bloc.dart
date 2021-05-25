@@ -74,6 +74,24 @@ class CartBloc implements BlocBase {
     });
   }
 
+  setPromoItem(Producto producto) {
+    items.listen((event) {
+      event.forEach((e) {
+        if (e.product.idProducto == producto.idProducto && e.count > 1) {
+          e.hasPromo = true;
+          if (e.count % 2 == 0) {
+            e.monto = e.product.precio * e.count * 0.5;
+          } else {
+            e.monto =
+                (e.product.precio * (e.count - 1) * 0.5) + e.product.precio;
+          }
+        } else if (e.product.idProducto == producto.idProducto) {
+          e.monto = e.product.precio * e.count;
+        }
+      });
+    });
+  }
+
   double _calculateTotalPrice(Cart cart, List<Promocion> list) {
     double total = 0;
     cart.items.forEach((e) {
@@ -87,7 +105,7 @@ class CartBloc implements BlocBase {
           total += (e.product.precio * (e.count - 1) * 0.5) + e.product.precio;
         }
       } else {
-        total += e.product.precio;
+        total += e.product.precio * e.count;
       }
     });
     return total;

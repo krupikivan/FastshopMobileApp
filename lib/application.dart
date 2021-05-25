@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:fastshop/user_repository/user_repository.dart';
 import 'package:provider/provider.dart';
 
+import 'blocs/home/promo_bloc.dart';
+
 class Application extends StatelessWidget {
   final UserRepository userRepository = UserRepository();
   final String token;
@@ -25,6 +27,8 @@ class Application extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<ListCategoriaNotifier>(
             create: (context) => ListCategoriaNotifier()),
+        ChangeNotifierProvider<PromoBloc>(
+            create: (context) => PromoBloc.init()),
         ChangeNotifierProvider(create: (_) => userRepository),
       ],
       child: BlocProvider<AuthenticationBloc>(

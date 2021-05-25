@@ -15,7 +15,8 @@ String promocionToJson(List<Promocion> data) {
 }
 
 class Promocion {
-  final String idPromocion;
+  final int idPromocion;
+  final int idProducto;
   final String fechaFin;
   final String fechaInicio;
   final String producto;
@@ -23,6 +24,7 @@ class Promocion {
 
   Promocion({
     this.idPromocion,
+    this.idProducto,
     this.fechaFin,
     this.fechaInicio,
     this.producto,
@@ -30,18 +32,19 @@ class Promocion {
   });
 
   factory Promocion.fromJson(Map<String, dynamic> json) => new Promocion(
-    idPromocion: json["idPromocion"],
-    fechaFin: json["fechaFin"],
-    fechaInicio: json["fechaInicio"],
-    producto: json["producto"],
-    promocion: json["promocion"],
-  );
+        idPromocion: json["idPromocion"],
+        idProducto: json["IdProducto"],
+        fechaFin: json["fechaFin"],
+        fechaInicio: json["fechaInicio"],
+        producto: json["producto"],
+        promocion: json["promocion"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "idPromocion": idPromocion,
-    "fechaFin": fechaFin,
-    "fechaInicio": fechaInicio,
-    "producto": producto,
-    "promocion": promocion,
-  };
+        "idPromocion": idPromocion,
+        "fechaFin": fechaFin,
+        "fechaInicio": fechaInicio,
+        "producto": producto,
+        "promocion": promocion,
+      };
 }

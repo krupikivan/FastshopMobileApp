@@ -43,8 +43,10 @@ class HomePageSample extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    timer =
-        Timer.periodic(Duration(seconds: 30), (Timer t) => bloc.fetchAllTodo());
+    timer = Timer.periodic(
+        Duration(seconds: 30),
+        (Timer t) =>
+            Provider.of<PromoBloc>(context, listen: false).getPromos());
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = new IOSInitializationSettings();
@@ -150,47 +152,45 @@ class HomePageSample extends State<HomePage>
       child: DefaultTabController(
         length: 4,
         initialIndex: widget.index,
-        child: StreamBuilder<List<Promocion>>(
-            stream: bloc.allTodo,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                _cartBloc.addPromos.add(snapshot.data);
-                _showNotification(snapshot.data);
-              }
-              return Scaffold(
-                  appBar: AppBar(
-                    title: Text(userData.userData.nombre),
-                    leading: LogOutButton(),
-                    actions: <Widget>[
-                      InkWell(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            ShoppingBasket(),
-                          ],
-                        ),
-                        onTap: () {
-                          Navigator.of(context).pushNamed('/shoppingBasket');
-                        },
-                      ),
-                    ],
-                    bottom: _tabBarLabel(),
+        child: Consumer<PromoBloc>(builder: (context, snapshot, _) {
+          if (snapshot.promociones.isNotEmpty) {
+            _cartBloc.addPromos.add(snapshot.promociones);
+            _showNotification(snapshot.promociones);
+          }
+          return Scaffold(
+              appBar: AppBar(
+                title: Text(userData.userData.nombre),
+                leading: LogOutButton(),
+                actions: <Widget>[
+                  InkWell(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        ShoppingBasket(),
+                      ],
+                    ),
+                    onTap: () {
+                      // Navigator.of(context).pushNamed('/shoppingBasket');
+                    },
                   ),
-                  body: Column(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          child: TabBarView(children: <Widget>[
-                            ActiveOfferPage(),
-                            CategoryPage(),
-                            BlocCartPage(),
-                            ShopListPage()
-                          ]),
-                        ),
-                      )
-                    ],
-                  ));
-            }),
+                ],
+                bottom: _tabBarLabel(),
+              ),
+              body: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      child: TabBarView(children: <Widget>[
+                        ActiveOfferPage(),
+                        CategoryPage(),
+                        BlocCartPage(),
+                        ShopListPage()
+                      ]),
+                    ),
+                  )
+                ],
+              ));
+        }),
       ),
     );
   }

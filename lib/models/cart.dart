@@ -16,7 +16,9 @@ class Cart {
 
   /// Fills the cart with a sampling from the given products.
   Cart.sample(Iterable<Producto> products) {
-    _items.addAll(products.take(3).map((product) => CartItem(1, product)));
+    _items.addAll(products
+        .take(3)
+        .map((product) => CartItem(count: 1, product: product)));
   }
 
   /// The total count of items in cart, including duplicates of the same item.
@@ -68,12 +70,12 @@ class Cart {
           _items.removeAt(i);
           return;
         }
-        _items[i] = CartItem(newCount, item.product);
+        _items[i] = CartItem(count: newCount, product: item.product);
         return;
       }
     }
     if (difference < 0) return;
-    _items.add(CartItem(max(difference, 0), product));
+    _items.add(CartItem(count: max(difference, 0), product: product));
   }
 
   void _setNewCount(Producto product, int count) {
@@ -86,7 +88,7 @@ class Cart {
           items.removeAt(i);
           return;
         }
-        _items[i] = CartItem(newCount, item.product);
+        _items[i] = CartItem(count: newCount, product: item.product);
         return;
       }
     }
