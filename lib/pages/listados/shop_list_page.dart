@@ -24,41 +24,41 @@ class ShopListPage extends StatelessWidget {
       builder: (context, AsyncSnapshot<List<Listado>> snapshot) {
         if (snapshot.hasData) {
           //Aca largamos la lista a la pantalla
-          return buildList(snapshot);
+          if (snapshot.data.isEmpty) {
+            return Text('Sin listados',
+                style: Theme.of(context).textTheme.display1);
+          } else {
+            return buildList(snapshot.data);
+          }
         } else if (snapshot.hasError) {
           return Text('Error es:${snapshot.error}');
         }
-        return Center(
-            child: Text('Sin listados',
-                style: Theme.of(context).textTheme.display1));
+        return Center(child: CircularProgressIndicator());
       },
     );
     //floatingActionButton: FloatingActionButton.extended(onPressed: null, backgroundColor: Colors.blueAccent, icon: Icon(Icons.add), label: Text('Nuevo'))
   }
 
-  Widget buildList(AsyncSnapshot<List<Listado>> snapshot) {
+  Widget buildList(List<Listado> data) {
     return GridView.builder(
-      itemCount: snapshot.data.length,
+      itemCount: data.length,
       gridDelegate:
           new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       itemBuilder: (BuildContext context, int index) {
         return InkResponse(
             enableFeedback: true,
             child: Card(
-              color: new Color(fCardColor.value),
-              child: new Stack(
-                children: <Widget>[
-                  //new Image.network(snapshot.data[index].uri, fit: BoxFit.cover),
-                  Padding(
-                      padding:
-                          EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0),
-                      child: new Text(snapshot.data[index].nombre,
-                          style: new TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black45))),
-                ],
-              ),
+              color: new Color(fPromoCardBackColor.value),
+              child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Center(
+                    child: new Text(data[index].nombre,
+                        textAlign: TextAlign.center,
+                        style: new TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
+                  )),
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               margin: EdgeInsets.all(18),
@@ -72,8 +72,8 @@ class ShopListPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => ShopDetailsListPage(
-                      nombre: snapshot.data[index].nombre,
-                      idListado: snapshot.data[index].idListado),
+                      nombre: data[index].nombre,
+                      idListado: data[index].idListado),
                 ),
               );
             });

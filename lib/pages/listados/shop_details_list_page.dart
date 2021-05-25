@@ -3,6 +3,7 @@ import 'package:fastshop/blocs/listados/listado_bloc.dart';
 import 'package:fastshop/blocs/listados/listado_event.dart';
 import 'package:fastshop/blocs/listados/listado_state.dart';
 import 'package:fastshop/blocs/listados/listado_delete_bloc.dart';
+import 'package:fastshop/design/colors.dart';
 import 'package:fastshop/models/models.dart';
 import 'package:fastshop/pages/home_page.dart';
 import 'package:flutter/material.dart';
@@ -38,46 +39,32 @@ class ShopDetailsListPage extends StatelessWidget {
 
   Widget _buildNormal(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text(nombre,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+        ),
         body: Container(
-          child: NestedScrollView(
-            scrollDirection: Axis.vertical,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                new SliverAppBar(
-                  title: Text(nombre,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)),
-                  expandedHeight: 5.0,
-                  floating: false,
-                  backgroundColor: Colors.black45,
-                  pinned: false,
-                  elevation: 0.0,
-                ),
-              ];
+          child: StreamBuilder(
+            //El stream que contiene las categorias del listado ya seleccionado
+            stream: bloc_user_list.listCategoryName,
+            builder: (context, AsyncSnapshot<List<ListCategory>> snapshot) {
+              if (snapshot.hasData) {
+                return buildList(snapshot);
+              } else if (snapshot.hasError) {
+                return Text('Error es:${snapshot.error}');
+              }
+              return Center(child: CircularProgressIndicator());
             },
-            body: StreamBuilder(
-              //El stream que contiene las categorias del listado ya seleccionado
-              stream: bloc_user_list.listCategoryName,
-              builder: (context, AsyncSnapshot<List<ListCategory>> snapshot) {
-                if (snapshot.hasData) {
-                  return buildList(snapshot);
-                } else if (snapshot.hasError) {
-                  return Text('Error es:${snapshot.error}');
-                }
-                return Center(child: CircularProgressIndicator());
-              },
-            ),
           ),
-          margin: new EdgeInsets.only(bottom: 10.0),
         ),
         floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
               deleteList(context);
             },
-            backgroundColor: Colors.red,
+            backgroundColor: fPromoCardBackColor,
             icon: Icon(Icons.delete),
             label: Text('Eliminar')));
   }
@@ -87,8 +74,15 @@ class ShopDetailsListPage extends StatelessWidget {
         itemCount: snapshot.data.length,
         itemBuilder: (BuildContext context, int index) {
           return new Container(
-            child: ListTile(
-              title: Text(snapshot.data[index].descripcion),
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text(snapshot.data[index].descripcion),
+                ),
+                Divider(
+                  color: Colors.black45,
+                )
+              ],
             ),
           );
         });

@@ -40,18 +40,33 @@ class BlocCartPageState extends State<BlocCartPage> {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Vacio', style: Theme.of(context).textTheme.display1),
                     Consumer<PromoBloc>(
-                      builder: (context, promoSnap, _) => RaisedButton(
-                        color: fButtonColor,
-                        onPressed: () =>
-                            scan(cart, _repo, promoSnap.promociones),
-                        child: Text(
-                          "Escanear",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
+                      builder: (context, promoSnap, _) => InkWell(
+                        onTap: () => scan(cart, _repo, promoSnap.promociones),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          width: 140,
+                          height: 50,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                "Escanear",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -116,11 +131,12 @@ class BlocCartPageState extends State<BlocCartPage> {
                           ),
                           ListTile(
                             title: Consumer<PromoBloc>(
-                              builder: (context, promoSnap, _) => RaisedButton(
-                                color: Colors.green,
+                              builder: (context, promoSnap, _) =>
+                                  FloatingActionButton.extended(
+                                backgroundColor: primaryColor,
                                 onPressed: () =>
                                     scan(cart, _repo, promoSnap.promociones),
-                                child: Text("Escanear",
+                                label: Text("Escanear",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 19,

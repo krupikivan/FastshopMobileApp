@@ -78,86 +78,74 @@ class CreateListPageState extends State<CreateListPage> {
     AuthenticationBloc user = BlocProvider.of<AuthenticationBloc>(context);
     var list = Provider.of<ListCategoriaNotifier>(context, listen: false);
     return Scaffold(
+        appBar: AppBar(
+          title: Text('Nuevo listado',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+        ),
         body: SafeArea(
           top: false,
           bottom: true,
           child: Container(
-            child: NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  SliverAppBar(
-                    title: Text('Nuevo listado',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold)),
-                    expandedHeight: 50.0,
-                    floating: false,
-                    backgroundColor: Colors.black38,
-                    pinned: true,
-                    elevation: 0.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Padding(
+                  child: TextField(
+                    controller: listNameController,
+                    decoration: InputDecoration(
+                        hintText: "Ingrese nombre del listado",
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)))),
                   ),
-                ];
-              },
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Padding(
-                    child: TextField(
-                      controller: listNameController,
-                      decoration: InputDecoration(
-                          hintText: "Ingrese nombre del listado",
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)))),
-                    ),
-                    padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(15.0),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    msg,
+                    style: TextStyle(fontSize: 15.0, color: Colors.red),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      msg,
-                      style: TextStyle(fontSize: 15.0, color: Colors.red),
-                    ),
-                  ),
-                  new Expanded(
-                    child: new ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: list.listCategoria.length,
-                        padding: const EdgeInsets.all(10.0),
-                        itemBuilder: (BuildContext context, int index) {
-                          return new Column(
-                            children: <Widget>[
-                              new Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: new ListTile(
-                                  trailing: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          list.listCategoria.removeAt(index);
-                                        });
-                                      },
-                                      child: Icon(
-                                        Icons.clear,
-                                        size: 35.0,
-                                      )),
-                                  title: Text(
-                                      list.listCategoria[index].descripcion),
-                                ),
+                ),
+                new Expanded(
+                  child: new ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: list.listCategoria.length,
+                      padding: const EdgeInsets.all(10.0),
+                      itemBuilder: (BuildContext context, int index) {
+                        return new Column(
+                          children: <Widget>[
+                            new Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: new ListTile(
+                                trailing: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        list.listCategoria.removeAt(index);
+                                      });
+                                    },
+                                    child: Icon(
+                                      Icons.clear,
+                                      color: fPromoCardBackColor,
+                                      size: 35.0,
+                                    )),
+                                title:
+                                    Text(list.listCategoria[index].descripcion),
                               ),
-                              Divider(
-                                height: 2.0,
-                                color: Colors.grey,
-                              )
-                            ],
-                          );
-                        }),
-                  ),
-                ],
-              ),
+                            ),
+                            Divider(
+                              height: 2.0,
+                              color: Colors.grey,
+                            )
+                          ],
+                        );
+                      }),
+                ),
+              ],
             ),
-            margin: new EdgeInsets.only(bottom: 10.0),
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
