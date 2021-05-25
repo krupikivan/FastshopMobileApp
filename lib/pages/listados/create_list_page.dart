@@ -124,7 +124,8 @@ class CreateListPageState extends State<CreateListPage> {
                                 trailing: InkWell(
                                     onTap: () {
                                       setState(() {
-                                        list.listCategoria.removeAt(index);
+                                        list.removeToList(
+                                            list.listCategoria[index]);
                                       });
                                     },
                                     child: Icon(

@@ -118,15 +118,25 @@ class BlocCartPageState extends State<BlocCartPage> {
                                 //     fontSize: 25),
                               ),
                             ),
-                            trailing: RaisedButton(
-                              color: fButtonColor,
-                              onPressed: () => _showQRCoder(context, cart),
-                              child: Text("Finalizar Compra",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.bold,
-                                  )),
+                            trailing: InkWell(
+                              onTap: () => _showQRCoder(context, cart),
+                              child: Container(
+                                height: 40,
+                                width: 180,
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: primaryColor,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Center(
+                                  child: Text("Finalizar Compra",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ),
+                              ),
                             ),
                           ),
                           ListTile(
@@ -220,7 +230,7 @@ class BlocCartPageState extends State<BlocCartPage> {
       List<Promocion> list) async {
     try {
       String barcode = await BarcodeScanner.scan();
-      // String barcode = '1';
+      // String barcode = '7790895067556';
       print(barcode);
       Producto producto = await _repo.fetchProductScanned(barcode);
       _cartBloc.cartAddition.add(CartAddition(producto));

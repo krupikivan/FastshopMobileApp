@@ -1,7 +1,7 @@
 import 'package:fastshop/bloc_helpers/bloc_provider.dart';
 import 'package:fastshop/blocs/cart/cart_bloc.dart';
+import 'package:fastshop/design/colors.dart';
 import 'package:fastshop/models/cartItem.dart';
-import 'package:fastshop/models/producto.dart';
 import 'package:fastshop/models/promocion.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -36,6 +36,7 @@ class ItemTile extends StatelessWidget {
                 item.hasPromo
                     ? Positioned(
                         top: 10,
+                        right: 2,
                         child: FittedBox(
                           child: Text(
                             '\$${num.parse((item.monto).toStringAsFixed(2))}',
@@ -58,7 +59,7 @@ class ItemTile extends StatelessWidget {
               },
               child: Text('\nCantidad ${item.count}',
                   style: TextStyle(
-                      color: Colors.blue,
+                      color: primaryColor,
                       decoration: TextDecoration.underline)),
             ),
             Text('\nPrec/U. \$${item.product.precio}'),
@@ -94,7 +95,7 @@ class ItemTile extends StatelessWidget {
     return IconButton(
       icon: Icon(
         Icons.remove_circle_outline,
-        color: Colors.red,
+        color: fPromoCardBackColor,
       ),
       onPressed: () {
         cartBloc.cartAddition.add(CartAddition(item.product, -item.count));

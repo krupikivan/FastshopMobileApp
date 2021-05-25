@@ -3,6 +3,7 @@ import 'package:fastshop/blocs/registration/registration_bloc.dart';
 import 'package:fastshop/blocs/registration/registration_event.dart';
 import 'package:fastshop/blocs/registration/registration_form_bloc.dart';
 import 'package:fastshop/blocs/registration/registration_state.dart';
+import 'package:fastshop/design/colors.dart';
 import 'package:fastshop/widgets/pending_action.dart';
 import 'package:flutter/material.dart';
 
@@ -253,13 +254,28 @@ class _RegistrationFormState extends State<RegistrationForm> {
                           child: new ButtonBar(children: <Widget>[
                             new SizedBox(
                               height: 48.0,
-                              child: new ElevatedButton(
-                                  child: const Text("Registrar",
-                                      textScaleFactor: 1.5),
-                                  onPressed:
-                                      /*(snapshot.hasData && snapshot.data == true)
-                                    ? */
-                                      () {
+                              child: new InkWell(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: primaryColor,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    width: 140,
+                                    height: 48.8,
+                                    child: Center(
+                                      child: const Text(
+                                        "Registrar",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 20),
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: () {
                                     _registrationBloc.emitEvent(
                                         RegistrationEvent(
                                             event:
@@ -274,14 +290,30 @@ class _RegistrationFormState extends State<RegistrationForm> {
                             ),
                             new SizedBox(
                               height: 48.0,
-                              child: new RaisedButton(
-                                child:
-                                    const Text("Borrar", textScaleFactor: 1.5),
-                                color: Colors.white,
-                                onPressed: () {
+                              child: new InkWell(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  width: 140,
+                                  height: 48.8,
+                                  child: Center(
+                                    child: const Text(
+                                      "Borrar",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          fontSize: 20),
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {
                                   _clearForm();
                                 },
-                                elevation: 4.0,
                               ),
                             ),
                           ]),
