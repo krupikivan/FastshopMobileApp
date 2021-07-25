@@ -19,6 +19,14 @@ class Preferences {
     return _prefs.getInt('promo') ?? 0;
   }
 
+  List<String> get notif {
+    return _prefs.getStringList('notif') ?? [];
+  }
+
+  set notif(List<String> value) {
+    _prefs.setStringList('notif', value);
+  }
+
   set promoCant(int value) {
     _prefs.setInt('promo', value);
   }

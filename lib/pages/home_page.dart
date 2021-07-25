@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:fastshop/bloc_helpers/bloc_provider.dart';
 import 'package:fastshop/blocs/cart/cart_bloc.dart';
+import 'package:fastshop/blocs/home/notification_bloc.dart';
 import 'package:fastshop/blocs/home/promo_bloc.dart';
 import 'package:fastshop/functions/getUsername.dart';
 import 'package:fastshop/models/promocion.dart';
@@ -8,15 +9,13 @@ import 'package:fastshop/pages/active_offer.dart';
 import 'package:fastshop/pages/category_page.dart';
 import 'package:fastshop/pages/listados/shop_list_page.dart';
 import 'package:fastshop/pages/shopping/cart_page.dart';
-import 'package:fastshop/pages/test_page.dart';
-import 'package:fastshop/repos/user_repository.dart';
 import 'package:fastshop/user_repository/user_repository.dart';
 import 'package:fastshop/widgets/log_out_button.dart';
+import 'package:fastshop/widgets/notification_icon.dart';
 import 'package:fastshop/widgets/shopping_basket.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../preferences.dart';
 
@@ -35,18 +34,14 @@ class HomePageSample extends State<HomePage>
 
   Timer timer;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  // HomePageSample(this.user);
-  // Future<void> _getUsername() async {
-  //   user = await getUsername();
-  // }
 
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(
-        Duration(seconds: 30),
-        (Timer t) =>
-            Provider.of<PromoBloc>(context, listen: false).getPromos());
+    timer = Timer.periodic(Duration(seconds: 3), (Timer t) {
+      Provider.of<PromoBloc>(context, listen: false).getPromos();
+      Provider.of<NotificationBloc>(context, listen: false).getNotif();
+    });
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = new IOSInitializationSettings();
@@ -163,12 +158,13 @@ class HomePageSample extends State<HomePage>
                 leading: LogOutButton(),
                 actions: <Widget>[
                   InkWell(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        ShoppingBasket(),
-                      ],
-                    ),
+                    child: NotificationIcon(),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/notification');
+                    },
+                  ),
+                  InkWell(
+                    child: ShoppingBasket(),
                     onTap: () {
                       // Navigator.of(context).pushNamed('/shoppingBasket');
                     },

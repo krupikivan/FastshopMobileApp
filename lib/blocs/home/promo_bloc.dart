@@ -6,7 +6,8 @@ class PromoBloc with ChangeNotifier {
   final _repository = PromoRepository();
   // final _todoFetcher = PublishSubject<List<Promocion>>();
   List<Promocion> _promociones = [];
-
+  bool _loading = false;
+  bool get loading => _loading;
   List<Promocion> get promociones => _promociones;
 
   PromoBloc.init() {
@@ -18,12 +19,20 @@ class PromoBloc with ChangeNotifier {
     notifyListeners();
   }
 
+  set loading(bool loading) {
+    _loading = loading;
+    notifyListeners();
+  }
+
   //Con stream escuchamos y con sink agregamos (es como una pila)
   // Observable<List<Promocion>> get allTodo => _todoFetcher.stream;
 
   getPromos() async {
+    _loading = true;
+    notifyListeners();
     List list = await _repository.fetchAllTodo();
     promociones = list;
+    _loading = false;
   }
 
   //El ASYNC soluciono el tema de cambiar de pestaña y volver para que siga estando

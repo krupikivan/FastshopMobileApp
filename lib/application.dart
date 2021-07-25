@@ -1,10 +1,12 @@
 import 'package:fastshop/bloc_helpers/bloc_provider.dart';
 import 'package:fastshop/blocs/authentication/authentication_bloc.dart';
 import 'package:fastshop/blocs/cart/cart_bloc.dart';
+import 'package:fastshop/blocs/home/notification_bloc.dart';
 import 'package:fastshop/blocs/shopping/shopping_bloc.dart';
 import 'package:fastshop/design/colors.dart';
 import 'package:fastshop/pages/authentication/authentication_page.dart';
 import 'package:fastshop/pages/listados/list_categoria_notifier.dart';
+import 'package:fastshop/pages/notificacion_page.dart';
 import 'package:fastshop/pages/shopping/cart_page.dart';
 import 'package:fastshop/pages/decision/decision_page.dart';
 import 'package:fastshop/pages/authentication/initialization_page.dart';
@@ -29,6 +31,8 @@ class Application extends StatelessWidget {
             create: (context) => ListCategoriaNotifier()),
         ChangeNotifierProvider<PromoBloc>(
             create: (context) => PromoBloc.init()),
+        ChangeNotifierProvider<NotificationBloc>(
+            create: (context) => NotificationBloc.init()),
         ChangeNotifierProvider(create: (_) => userRepository),
       ],
       child: BlocProvider<AuthenticationBloc>(
@@ -51,6 +55,7 @@ class Application extends StatelessWidget {
                   '/loginScreen': (BuildContext context) =>
                       AuthenticationPage(userRepository: userRepository),
                   '/shoppingBasket': (BuildContext context) => BlocCartPage(),
+                  '/notification': (BuildContext context) => NotificationPage(),
                 },
                 home: InitializationPage()),
           ),
