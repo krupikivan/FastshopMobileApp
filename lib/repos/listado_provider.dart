@@ -33,9 +33,10 @@ class ListadoProvider {
     final response = await client.get(_url + "?idCliente=$id");
     if (response.statusCode == 200) {
       print(response.body);
-      return compute(listadoFromJson, response.body);
+      return await compute(listadoFromJson, response.body);
     } else {
       print('No encontro listados');
+      return [];
       // throw Exception('No encontro listado de compras');
     }
   }

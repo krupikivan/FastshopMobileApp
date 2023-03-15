@@ -25,7 +25,7 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   void initState() {
     // selected = new List();
-    bloc_categories_name.fetchAllTodo();
+    blocCategoriesName.fetchAllTodo();
     searchController.addListener(() {
       setState(() {
         filter = searchController.text;
@@ -37,13 +37,13 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   void dispose() {
     searchController.dispose();
-    bloc_categories_name.dispose();
+    blocCategoriesName.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    bloc_categories_name.fetchAllTodo();
+    blocCategoriesName.fetchAllTodo();
     return Material(
       child: new Column(
         children: <Widget>[
@@ -60,7 +60,7 @@ class _CategoryPageState extends State<CategoryPage> {
             ),
           ),
           StreamBuilder(
-              stream: bloc_categories_name.allTodo,
+              stream: blocCategoriesName.allTodo,
               builder: (context, AsyncSnapshot<List<Categoria>> snapshot) {
                 if (snapshot.hasData) {
                   //Aca largamos la lista a la pantalla
@@ -99,7 +99,7 @@ class _CategoryPageState extends State<CategoryPage> {
             content: const Text(
                 'Debe seleccionar al menos un elemento para poder crear un listado'),
             actions: <Widget>[
-              FlatButton(
+              OutlinedButton(
                 child: const Text('Ok'),
                 onPressed: () {
                   Navigator.of(context).pop();

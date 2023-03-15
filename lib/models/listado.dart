@@ -15,7 +15,7 @@ String listadoToJson(List<Listado> data) {
 }
 
 class Listado {
-  String idListado;
+  int idListado;
   String nombre;
   String producto;
   String cantidad;
@@ -30,18 +30,18 @@ class Listado {
   });
 
   factory Listado.fromJson(Map<String, dynamic> json) => new Listado(
-    idListado: json["idListado"],
-    nombre: json["nombre"],
-    producto: json["producto"],
-    cantidad: json["cantidad"],
-    cliente: json["cliente"],
-  );
+        idListado: json["idListado"],
+        nombre: json["nombre"],
+        producto: json["producto"],
+        cantidad: json["cantidad"],
+        cliente: json["cliente"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "idListado": idListado,
-    "nombre": nombre,
-    "producto": producto,
-    "cantidad": cantidad,
-    "cliente": cliente,
-  };
+        "idListado": idListado,
+        "nombre": nombre,
+        "producto": producto,
+        "cantidad": cantidad,
+        "cliente": cliente,
+      };
 }

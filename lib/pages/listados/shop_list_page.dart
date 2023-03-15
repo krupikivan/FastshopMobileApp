@@ -1,5 +1,4 @@
 import 'package:fastshop/design/colors.dart';
-import 'package:fastshop/functions/getUsername.dart';
 import 'package:fastshop/models/models.dart';
 import 'package:fastshop/user_repository/user_repository.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,18 +14,18 @@ class ShopListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userData = Provider.of<UserRepository>(context, listen: false);
-    bloc_user_list.fetchUserListNames(userData.userData.idCliente);
+    blocUserList.fetchUserListNames(userData.userData.idCliente);
     // fetchUserListNames(userData.userData.idCliente);
     return StreamBuilder(
       //Estamos escuchando al stream,
       //cuando el valor sale afuera del stream largamos la lista por pantalla
-      stream: bloc_user_list.userListNames,
+      stream: blocUserList.userListNames,
       builder: (context, AsyncSnapshot<List<Listado>> snapshot) {
         if (snapshot.hasData) {
           //Aca largamos la lista a la pantalla
           if (snapshot.data.isEmpty) {
             return Text('Sin listados',
-                style: Theme.of(context).textTheme.display1);
+                style: Theme.of(context).textTheme.headline4);
           } else {
             return buildList(snapshot.data);
           }

@@ -3,7 +3,6 @@ import 'package:fastshop/bloc_helpers/bloc_provider.dart';
 import 'package:fastshop/blocs/cart/cart_bloc.dart';
 import 'package:fastshop/blocs/home/notification_bloc.dart';
 import 'package:fastshop/blocs/home/promo_bloc.dart';
-import 'package:fastshop/functions/getUsername.dart';
 import 'package:fastshop/models/promocion.dart';
 import 'package:fastshop/pages/active_offer.dart';
 import 'package:fastshop/pages/category_page.dart';
@@ -38,7 +37,7 @@ class HomePageSample extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 3), (Timer t) {
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) {
       Provider.of<PromoBloc>(context, listen: false).getPromos();
       Provider.of<NotificationBloc>(context, listen: false).getNotif();
     });

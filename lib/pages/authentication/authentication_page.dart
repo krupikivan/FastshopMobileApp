@@ -47,9 +47,9 @@ class AuthenticationPageLoginState extends State<AuthenticationPageLogin> {
   ///
   /// Prevents the use of the "back" button
   ///
-  Future<bool> _onWillPopScope() async {
-    return false;
-  }
+  // Future<bool> _onWillPopScope() async {
+  //   return false;
+  // }
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -120,21 +120,22 @@ class AuthenticationPageLoginState extends State<AuthenticationPageLogin> {
 
           children.add(
             ListTile(
-              title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
+              title: GestureDetector(
+                onTap: () {
+                  bloc.emitEvent(AuthenticationEventLogin(
+                      email: _emailController.text,
+                      password: _passwordController.text));
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: primaryColor,
                     borderRadius: BorderRadius.circular(24),
                   ),
-                  onPressed: () {
-                    bloc.emitEvent(AuthenticationEventLogin(
-                        email: _emailController.text,
-                        password: _passwordController.text));
-                  },
-                  padding: EdgeInsets.all(10),
-                  color: primaryColor,
-                  child: Text('Iniciar Sesion',
-                      style: TextStyle(color: Colors.white)),
+                  child: Center(
+                    child: Text('Iniciar Sesion',
+                        style: TextStyle(color: Colors.white)),
+                  ),
                 ),
               ),
             ),
@@ -142,19 +143,20 @@ class AuthenticationPageLoginState extends State<AuthenticationPageLogin> {
 
           children.add(
             ListTile(
-              title: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
+              title: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/register');
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(24),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/register');
-                  },
-                  padding: EdgeInsets.all(10),
-                  color: Colors.white,
-                  child: Text('Registrate con tu mail',
-                      style: TextStyle(color: primaryColor)),
+                  child: Center(
+                    child: Text('Registrate con tu mail',
+                        style: TextStyle(color: primaryColor)),
+                  ),
                 ),
               ),
             ),

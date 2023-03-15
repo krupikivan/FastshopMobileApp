@@ -22,7 +22,7 @@ class ItemTile extends StatelessWidget {
           children: <Widget>[
             Text(item.product.descripcion),
             Stack(
-              overflow: Overflow.visible,
+              clipBehavior: Clip.none,
               children: [
                 Text(
                     '\$${num.parse((item.product.precio * item.count).toStringAsFixed(2))}',

@@ -5,11 +5,8 @@ import 'package:fastshop/blocs/listados/listado_event.dart';
 import 'package:fastshop/blocs/listados/listado_save_bloc.dart';
 import 'package:fastshop/blocs/listados/listado_state.dart';
 import 'package:fastshop/design/colors.dart';
-import 'package:fastshop/functions/getUsername.dart';
-import 'package:fastshop/models/models.dart';
 import 'package:fastshop/pages/home_page.dart';
 import 'package:fastshop/pages/listados/list_categoria_notifier.dart';
-import 'package:fastshop/user_repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -170,7 +167,7 @@ class CreateListPageState extends State<CreateListPage> {
               title: Text('Error!'),
               content: const Text('No selecciono ningun elemento para guardar'),
               actions: <Widget>[
-                FlatButton(
+                OutlinedButton(
                   child: const Text('Ok'),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -189,7 +186,7 @@ class CreateListPageState extends State<CreateListPage> {
               title: Text('Error!'),
               content: const Text('Debe ingresar un nombre al listado'),
               actions: <Widget>[
-                FlatButton(
+                OutlinedButton(
                   child: const Text('Ok'),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -226,7 +223,7 @@ class CreateListPageState extends State<CreateListPage> {
       title: Text('Muy bien!'),
       content: Text('Se creo ' + listNameController.text),
       actions: <Widget>[
-        FlatButton(
+        OutlinedButton(
           child: const Text('Ok'),
           onPressed: () {
             Navigator.pop(context);
@@ -248,7 +245,7 @@ class CreateListPageState extends State<CreateListPage> {
       title: Text('Error!'),
       content: const Text('Error en creacion del listado'),
       actions: <Widget>[
-        FlatButton(
+        OutlinedButton(
           child: const Text('Ok'),
           onPressed: () {
             Navigator.of(context).pop();

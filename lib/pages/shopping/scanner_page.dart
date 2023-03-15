@@ -29,7 +29,7 @@ class _ScannerPageState extends State<ScannerPage> {
         child: ButtonTheme(
           minWidth: 150.0,
           height: 50.0,
-          child: RaisedButton.icon(
+          child: ElevatedButton.icon(
             icon: Icon(
               Icons.camera_alt,
               color: Colors.white,

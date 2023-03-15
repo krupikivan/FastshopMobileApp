@@ -23,8 +23,7 @@ class CartBloc implements BlocBase {
   final BehaviorSubject<List<CartItem>> _items =
       BehaviorSubject<List<CartItem>>.seeded([]);
 
-  final BehaviorSubject<List<Promocion>> _promos =
-      BehaviorSubject<List<Promocion>>.seeded([]);
+  final _promos = BehaviorSubject<List<Promocion>>.seeded([]);
 
   final BehaviorSubject<int> _itemCount = BehaviorSubject<int>.seeded(0);
 
@@ -126,6 +125,7 @@ class CartBloc implements BlocBase {
   @override
   void dispose() {
     _items.close();
+    _promos.close();
     _itemCount.close();
     _itemTotalPrice.close();
     _cartAdditionController.close();

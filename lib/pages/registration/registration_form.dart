@@ -66,7 +66,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
       title: Text('Exitoso'),
       content: const Text('El usuario ha sido registrado'),
       actions: <Widget>[
-        FlatButton(
+        OutlinedButton(
           child: Text('Ok'),
           onPressed: () {
             Navigator.of(context).pop();
@@ -81,7 +81,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
       title: Text('Error'),
       content: const Text('Error en la creacion del usuario'),
       actions: <Widget>[
-        FlatButton(
+        OutlinedButton(
           child: Text('Ok'),
           onPressed: () {
             Navigator.pop(context);

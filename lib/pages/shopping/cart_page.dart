@@ -25,7 +25,6 @@ class BlocCartPage extends StatefulWidget {
 
 class BlocCartPageState extends State<BlocCartPage> {
   String barcode = "";
-  String _inputErrorText;
   final _repo = ProductoRepository();
 
   @override
@@ -188,10 +187,7 @@ class BlocCartPageState extends State<BlocCartPage> {
                               EdgeInsets.only(top: 10, left: 10, right: 10),
                           onError: (ex) {
                             print("[QR] ERROR - $ex");
-                            setState(() {
-                              _inputErrorText =
-                                  "Error! Maybe your input value is too long?";
-                            });
+                            setState(() {});
                           },
                         ),
                       ),
@@ -205,7 +201,7 @@ class BlocCartPageState extends State<BlocCartPage> {
               StreamBuilder<List<CartItem>>(
                   stream: _cartBloc.items,
                   builder: (context, snapshot) {
-                    return FlatButton(
+                    return OutlinedButton(
                         onPressed: () {
                           //Borra el carrito de compras
                           snapshot.data.forEach((element) {
@@ -216,7 +212,7 @@ class BlocCartPageState extends State<BlocCartPage> {
                         },
                         child: Text('Finalizar'));
                   }),
-              FlatButton(
+              OutlinedButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -246,7 +242,7 @@ class BlocCartPageState extends State<BlocCartPage> {
                 content: Text(
                     'El producto escaneado ${producto.descripcion} tiene promocion asignada de tipo ${list.firstWhere((e) => e.idProducto == producto.idProducto).promocion}'),
                 actions: <Widget>[
-                  FlatButton(
+                  OutlinedButton(
                     child: const Text('Ok'),
                     onPressed: () {
                       Navigator.of(context).pop();

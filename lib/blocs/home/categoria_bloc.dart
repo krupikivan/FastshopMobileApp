@@ -22,4 +22,4 @@ class CategoryBloc {
   }
 }
 
-final bloc_categories_name = CategoryBloc();
+final blocCategoriesName = CategoryBloc();

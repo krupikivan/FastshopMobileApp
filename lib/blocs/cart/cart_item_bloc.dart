@@ -3,9 +3,7 @@ import 'package:fastshop/models/producto.dart';
 
 class CartItemBloc implements BlocBase {
   @override
-  void dispose() {
-    /// TODO:implement dispose
-  }
+  void dispose() {}
 
   CartItemBloc(Producto shoppingItem);
 }

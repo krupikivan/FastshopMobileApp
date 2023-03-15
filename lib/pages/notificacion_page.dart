@@ -24,7 +24,7 @@ class NotificationPage extends StatelessWidget {
             return snapshot.notifications.length == 0
                 ? Center(
                     child: Text('Sin Notificaciones',
-                        style: Theme.of(context).textTheme.display1))
+                        style: Theme.of(context).textTheme.headline4))
                 : buildList(snapshot.notifications);
           },
         ));

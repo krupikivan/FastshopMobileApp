@@ -21,6 +21,7 @@ class ShoppingBloc implements BlocBase {
   @override
   void dispose() {
     _itemsController?.close();
+    _shoppingBasketController?.close();
   }
 
   // Constructor
@@ -33,8 +34,8 @@ class ShoppingBloc implements BlocBase {
     _cartBloc.cartAddition.add(CartAddition(producto));
   }
 
-  void _loadShoppingItems() async {
-    List<Producto> _productList = await _repo.fetchProductList();
-    _itemsController.sink.add(_productList);
-  }
+  // void _loadShoppingItems() async {
+  //   List<Producto> _productList = await _repo.fetchProductList();
+  //   _itemsController.sink.add(_productList);
+  // }
 }

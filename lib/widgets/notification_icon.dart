@@ -1,5 +1,4 @@
 import 'package:fastshop/blocs/home/notification_bloc.dart';
-import 'package:fastshop/design/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

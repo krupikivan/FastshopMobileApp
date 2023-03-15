@@ -38,4 +38,4 @@ class ListBloc {
 }
 
 //Manejamos para traer los listados del cliente
-final bloc_user_list = ListBloc();
+final blocUserList = ListBloc();

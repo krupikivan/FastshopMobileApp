@@ -16,7 +16,7 @@ class ActiveOfferPage extends StatelessWidget {
           return snapshot.promociones.length == 0
               ? Center(
                   child: Text('Sin promociones',
-                      style: Theme.of(context).textTheme.display1))
+                      style: Theme.of(context).textTheme.headline4))
               : buildList(snapshot.promociones);
         },
       ),

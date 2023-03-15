@@ -21,7 +21,7 @@ class ShopDetailsListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bloc_user_list.fetchListCategories(idListado);
+    blocUserList.fetchListCategories(idListado);
     _listadoStateBloc = ListadoDeleteBloc();
     return BlocEventStateBuilder<ListadoState>(
         bloc: _listadoStateBloc,
@@ -49,7 +49,7 @@ class ShopDetailsListPage extends StatelessWidget {
         body: Container(
           child: StreamBuilder(
             //El stream que contiene las categorias del listado ya seleccionado
-            stream: bloc_user_list.listCategoryName,
+            stream: blocUserList.listCategoryName,
             builder: (context, AsyncSnapshot<List<ListCategory>> snapshot) {
               if (snapshot.hasData) {
                 return buildList(snapshot);
@@ -93,7 +93,7 @@ class ShopDetailsListPage extends StatelessWidget {
       title: Text('Exitoso'),
       content: const Text('El listado se ha eliminado con exito'),
       actions: <Widget>[
-        FlatButton(
+        OutlinedButton(
           child: Text('Ok'),
           onPressed: () {
             Navigator.pop(context);
@@ -115,7 +115,7 @@ class ShopDetailsListPage extends StatelessWidget {
       title: Text('Error'),
       content: const Text('Error en la eliminacion del listado'),
       actions: <Widget>[
-        FlatButton(
+        OutlinedButton(
           child: Text('Ok'),
           onPressed: () {
             Navigator.pop(context);
@@ -133,14 +133,14 @@ class ShopDetailsListPage extends StatelessWidget {
           title: Text('Eliminar listado'),
           content: Text('Seguro quiere eliminar el listado ' + nombre + '?'),
           actions: <Widget>[
-            FlatButton(
+            OutlinedButton(
               child: const Text('Si'),
               onPressed: () {
                 _deleteListById(idListado);
                 Navigator.pop(context);
               },
             ),
-            FlatButton(
+            OutlinedButton(
               child: const Text('No'),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -152,8 +152,8 @@ class ShopDetailsListPage extends StatelessWidget {
     );
   }
 
-  void _deleteListById(idListado) {
-    _listadoStateBloc.emitEvent(
-        ListDelete(event: ListadoEventType.working, idList: idListado));
+  void _deleteListById(int idListado) {
+    _listadoStateBloc.emitEvent(ListDelete(
+        event: ListadoEventType.working, idList: idListado.toString()));
   }
 }

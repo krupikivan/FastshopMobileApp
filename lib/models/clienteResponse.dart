@@ -13,6 +13,6 @@ class ClienteResponse {
         error = "";
 
   ClienteResponse.withError(String errorValue)
-      : results = List(),
+      : results = [],
         error = errorValue;
 }

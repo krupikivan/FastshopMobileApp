@@ -5,7 +5,7 @@ saveCurrentLogin(Map responseJson) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   //var username;
 
-  if ((responseJson != null && !responseJson.isEmpty)) {
+  if ((responseJson != null && responseJson.isNotEmpty)) {
     prefs.setString('email', Cliente.fromJson(responseJson).email);
     prefs.setString('nombre', Cliente.fromJson(responseJson).nombre);
     prefs.setString('apellido', Cliente.fromJson(responseJson).apellido);

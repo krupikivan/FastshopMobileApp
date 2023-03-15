@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:fastshop/connection.dart';
-import 'package:fastshop/functions/getUserData.dart';
 import 'package:fastshop/functions/saveCurrentLogin.dart';
-import 'package:fastshop/functions/savelogout.dart';
 import 'package:fastshop/models/cliente.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';

@@ -16,8 +16,8 @@ String listXCatToJson(List<ListadoXCategoria> data) {
 }
 
 class ListadoXCategoria {
-  String idCategoria;
-  String idListado;
+  int idCategoria;
+  int idListado;
 
   ListadoXCategoria({
     this.idCategoria,

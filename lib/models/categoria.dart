@@ -5,7 +5,6 @@ List<Categoria> categoriaFromJson(String str) {
   return new List<Categoria>.from(jsonData.map((x) => Categoria.fromJson(x)));
 }
 
-
 String categoriaToJson(List<Categoria> data) {
   final dyn = new List<dynamic>.from(data.map((x) => x.toJson()));
   return json.encode(dyn);
@@ -18,9 +17,9 @@ listxCate(List<Categoria> data) {
 }
 
 class Categoria {
-  String idCategoria;
+  int idCategoria;
   String descripcion;
-  String superior;
+  int superior;
 
   Categoria({
     this.idCategoria,
@@ -29,19 +28,18 @@ class Categoria {
   });
 
   factory Categoria.fromJson(Map<String, dynamic> json) => new Categoria(
-    idCategoria: json["idCategoria"],
-    descripcion: json["descripcion"],
-    superior: json["superior"],
-
-  );
+        idCategoria: json["idCategoria"],
+        descripcion: json["descripcion"],
+        superior: json["superior"],
+      );
 
   Map<String, dynamic> toJsonMin() => {
-    "idCategoria": idCategoria,
-  };
+        "idCategoria": idCategoria,
+      };
 
   Map<String, dynamic> toJson() => {
-    "idCategoria": idCategoria,
-    "descripcion": descripcion,
-    "superior": superior,
-  };
+        "idCategoria": idCategoria,
+        "descripcion": descripcion,
+        "superior": superior,
+      };
 }

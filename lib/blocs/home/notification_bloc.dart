@@ -25,7 +25,7 @@ class NotificationBloc with ChangeNotifier {
   }
 
   //Con stream escuchamos y con sink agregamos (es como una pila)
-  // Observable<List<Promocion>> get allTodo => _todoFetcher.stream;
+  // Observable<List<Promocion>> get` allTodo => _todoFetcher.stream;
 
   getNotif() async {
     print("Trayendo notificaciones");
@@ -48,7 +48,7 @@ class NotificationBloc with ChangeNotifier {
   saveData() {
     List<String> list = [];
     notifications.forEach((e) {
-      list.add(e.id);
+      list.add(e.id.toString());
     });
     Preferences().notif = list;
   }

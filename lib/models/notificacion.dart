@@ -7,7 +7,7 @@ List<Notificacion> notificacionFromJson(String str) {
 }
 
 class Notificacion {
-  String id;
+  int id;
   String cuerpo;
   String titulo;
 
