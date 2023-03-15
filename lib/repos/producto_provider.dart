@@ -8,8 +8,8 @@ import 'dart:async';
 
 class ProductoProvider {
   Client client = Client();
-  final _url = 'http://' + con.getUrl() + '/producto/readProductList.php';
-  final _urlScann = 'http://' + con.getUrl() + '/producto/readBarcode.php';
+  final _url = con.getUrl() + '/producto/readProductList.php';
+  final _urlScann = con.getUrl() + '/producto/readBarcode.php';
 
   Future<List<Producto>> fetchProductList() async {
     final response = await client.get(_url);

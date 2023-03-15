@@ -6,7 +6,7 @@ import 'dart:async';
 
 class NotifProvider {
   Client client = Client();
-  final _url = 'http://' + con.getUrl() + '/notificacion/read.php';
+  final _url = con.getUrl() + '/notificacion/read.php';
 
   Future<List<Notificacion>> fetchTodoList() async {
     final response = await client.get(_url);

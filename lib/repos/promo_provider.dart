@@ -6,7 +6,7 @@ import 'dart:async';
 
 class PromoProvider {
   Client client = Client();
-  final _url = 'http://' + con.getUrl() + '/promocion/read.php';
+  final _url = con.getUrl() + '/promocion/read.php';
   Future<List<Promocion>> fetchTodoList() async {
     final response = await client.get(_url);
     if (response.statusCode == 200) {

@@ -13,18 +13,15 @@ class ListadoProvider {
   Categoria categoria = Categoria();
 
   //URL para traer los nombres de los listados del cliente logueado
-  final _url = 'http://' + con.getUrl() + '/listado/readListName.php';
-  final _urlCategory =
-      'http://' + con.getUrl() + '/listado/readListCategoryName.php';
-  final _urlNewList = 'http://' + con.getUrl() + '/listado/insertListado.php';
-  final _urlInsertCat =
-      'http://' + con.getUrl() + '/listado/insertListadoSubcategoria.php';
+  final _url = con.getUrl() + '/listado/readListName.php';
+  final _urlCategory = con.getUrl() + '/listado/readListCategoryName.php';
+  final _urlNewList = con.getUrl() + '/listado/insertListado.php';
+  final _urlInsertCat = con.getUrl() + '/listado/insertListadoSubcategoria.php';
   final _urlInsertListXClie =
-      'http://' + con.getUrl() + '/listado/insertListadoXCliente.php';
-  final _urlGetIdUser = 'http://' + con.getUrl() + '/cliente/readIdcliente.php';
-  final _urlExistList = 'http://' + con.getUrl() + '/listado/getListExist.php';
-  final _urlDeleteList =
-      'http://' + con.getUrl() + '/listado/deleteListadoCompra.php';
+      con.getUrl() + '/listado/insertListadoXCliente.php';
+  final _urlGetIdUser = con.getUrl() + '/cliente/readIdcliente.php';
+  final _urlExistList = con.getUrl() + '/listado/getListExist.php';
+  final _urlDeleteList = con.getUrl() + '/listado/deleteListadoCompra.php';
 
   var headers = {"accept": "application/json"};
 

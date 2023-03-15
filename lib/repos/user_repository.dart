@@ -7,8 +7,8 @@
 
 // class UserRepository {
 
-//   final String _url = 'http://' + con.getUrl() + '/login.php';
-//   final String _url2 = 'http://' + con.getUrl() + '/signup.php';
+//   final String _url = con.getUrl() + '/login.php';
+//   final String _url2 = con.getUrl() + '/signup.php';
 //   var headers = {"accept" : "application/json"};
 
 //   Future<Cliente> authenticate({

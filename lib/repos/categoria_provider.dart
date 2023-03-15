@@ -6,7 +6,7 @@ import 'dart:async';
 
 class CategoriaProvider {
   Client client = Client();
-  final _url = 'http://' + con.getUrl() + '/categoria/read.php';
+  final _url = con.getUrl() + '/categoria/read.php';
 
   Future<List<Categoria>> fetchTodoList() async {
     final response = await client.get(_url);
