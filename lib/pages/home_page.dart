@@ -17,6 +17,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 
 import '../preferences.dart';
+import 'compra/compra_page.dart';
 
 class HomePage extends StatefulWidget {
   final int index;
@@ -108,6 +109,7 @@ class HomePageSample extends State<HomePage>
         Tab(text: "Categorias", icon: new Icon(Icons.shop)),
         Tab(text: "Carrito", icon: new Icon(Icons.shopping_cart)),
         Tab(text: "Listado", icon: new Icon(Icons.list)),
+        Tab(text: "Mis Compras", icon: new Icon(Icons.shop)),
       ];
 
   TabBar _tabBarLabel() => TabBar(
@@ -129,6 +131,9 @@ class HomePageSample extends State<HomePage>
             case 3:
               content = "Listado";
               break;
+            case 4:
+              content = "Mis Compras";
+              break;
             default:
               content = "Other";
               break;
@@ -144,7 +149,7 @@ class HomePageSample extends State<HomePage>
     return WillPopScope(
       onWillPop: _onWillPopScope,
       child: DefaultTabController(
-        length: 4,
+        length: _tabItems().length,
         initialIndex: widget.index,
         child: Consumer<PromoBloc>(builder: (context, snapshot, _) {
           if (snapshot.promociones.isNotEmpty) {
@@ -179,7 +184,8 @@ class HomePageSample extends State<HomePage>
                         ActiveOfferPage(),
                         CategoryPage(),
                         BlocCartPage(),
-                        ShopListPage()
+                        ShopListPage(),
+                        CompraPage(),
                       ]),
                     ),
                   )

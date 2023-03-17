@@ -122,6 +122,16 @@ class CartBloc implements BlocBase {
 
   Stream<List<CartItem>> get items => _items.stream;
 
+  List<int> get productsId {
+    List<int> ids = [];
+    for (var item in _items.stream.value) {
+      for (var i = 0; i < item.count; i++) {
+        ids.add(item.product.idProducto);
+      }
+    }
+    return ids;
+  }
+
   @override
   void dispose() {
     _items.close();

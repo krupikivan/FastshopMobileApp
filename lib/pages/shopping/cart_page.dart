@@ -1,11 +1,13 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:fastshop/bloc_helpers/bloc_provider.dart';
 import 'package:fastshop/blocs/cart/cart_bloc.dart';
+import 'package:fastshop/blocs/compra/compra_bloc.dart';
 import 'package:fastshop/blocs/home/promo_bloc.dart';
 import 'package:fastshop/design/colors.dart';
 import 'package:fastshop/models/producto.dart';
 import 'package:fastshop/models/promocion.dart';
 import 'package:fastshop/repos/producto_repository.dart';
+import 'package:fastshop/user_repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -208,6 +210,10 @@ class BlocCartPageState extends State<BlocCartPage> {
                             _cartBloc.cartAddition.add(
                                 CartAddition(element.product, -element.count));
                           });
+                          var userData = Provider.of<UserRepository>(context,
+                              listen: false);
+                          blocCompra.saveCompras(_cartBloc.productsId,
+                              userData.userData.idCliente);
                           Navigator.pop(context);
                         },
                         child: Text('Finalizar'));

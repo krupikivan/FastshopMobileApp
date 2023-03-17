@@ -51,7 +51,6 @@ class ListadoProvider {
 
   //Metodo para borrar el listado con sus 3 tablas
   // Future<List<Listado>> deleteList(idListado) async {
-  //   await Future.delayed(Duration(seconds: 1));
   //   final response = await client.post(_urlDeleteList+"?idListado=$idListado");
   //   if (response.statusCode == 200) {
   //     //Eliminado
@@ -63,7 +62,6 @@ class ListadoProvider {
   Future<bool> deleteUserList({
     @required String idListado,
   }) async {
-    await Future.delayed(Duration(seconds: 1));
     final response =
         await client.post(_urlDeleteList + "?idListado=$idListado");
     if (response.statusCode == 400) {
@@ -80,7 +78,6 @@ class ListadoProvider {
       'listadoCategorias': listxCate(selected)
     };
     print(jsonEncode(body));
-    await Future.delayed(Duration(seconds: 1));
     final response = await client.post(_urlNewList, body: jsonEncode(body));
     if (response.statusCode == 200) {
       // List<Listado> listado = listadoFromJson(response.body);
@@ -97,7 +94,6 @@ class ListadoProvider {
   //Luego de agregar el nombre, agregamos las categorias de una lista de compra (SEGUNDA TABLA)
   Future addCategories(listCat, user) async {
     var body = jsonEncode(listCat);
-    await Future.delayed(Duration(seconds: 1));
     final response = await client.post(_urlInsertCat, body: body);
     if (response.statusCode == 200) {
       var id = jsonDecode(response.body);
@@ -121,7 +117,6 @@ class ListadoProvider {
   Future addListXClien(idListado, idCliente) async {
     var body = jsonEncode({'idListado': idListado, 'idCliente': idCliente});
     print(body);
-    await Future.delayed(Duration(seconds: 1));
     final response = await client.post(_urlInsertListXClie, body: body);
     if (response.statusCode == 200) {
       return response;

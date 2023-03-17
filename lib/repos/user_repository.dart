@@ -22,7 +22,6 @@
 //       'password': password,
 //     };
 
-//     await Future.delayed(Duration(seconds: 1));
 
 //     final response = await http.post(_url, body: jsonEncode(body), headers: headers);
 
@@ -54,7 +53,6 @@
 //       'password': password,
 //     };
 
-//     await Future.delayed(Duration(seconds: 1));
 //     final response = await http.post(_url2, body: jsonEncode(body), headers: headers);
 //     if (response.statusCode == 400) {
 //       return false;
@@ -65,20 +63,17 @@
 //   Future<void> deleteToken() async {
 //     /// delete from keystore/keychain
 //     //_storage.delete(key: 'jwt');
-//     await Future.delayed(Duration(seconds: 1));
 //     return;
 //   }
 
 //   Future<void> persistToken(String token) async {
 //     /// write to keystore/keychain
 //     //_storage.write(key: 'jwt', value: client.token);
-//     await Future.delayed(Duration(seconds: 1));
 //     return;
 //   }
 
 //   Future<bool> hasToken() async {
 //     /// read from keystore/keychain
-//     await Future.delayed(Duration(seconds: 1));
 //     return false;
 //   }
 // }

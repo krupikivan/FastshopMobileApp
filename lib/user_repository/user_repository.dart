@@ -37,7 +37,6 @@ class UserRepository with ChangeNotifier {
       'password': password,
     };
 
-    await Future.delayed(Duration(seconds: 1));
     var response;
     try {
       response =
@@ -76,7 +75,6 @@ class UserRepository with ChangeNotifier {
       'password': password,
     };
     print(jsonEncode(body));
-    await Future.delayed(Duration(seconds: 1));
     final response =
         await http.post(_url2, body: jsonEncode(body), headers: headers);
     print(jsonEncode(body));
@@ -90,7 +88,6 @@ class UserRepository with ChangeNotifier {
   Future<void> deleteToken() async {
     /// delete from keystore/keychain
     //_storage.delete(key: 'jwt');
-    await Future.delayed(Duration(seconds: 1));
     return;
   }
 
@@ -98,7 +95,6 @@ class UserRepository with ChangeNotifier {
     Map<String, String> body = {
       'jwt': token,
     };
-    await Future.delayed(Duration(seconds: 1));
     final response =
         await http.post(_url3, body: jsonEncode(body), headers: headers);
     if (response.statusCode == 200) {
@@ -113,7 +109,6 @@ class UserRepository with ChangeNotifier {
 
   Future<bool> hasToken() async {
     /// read from keystore/keychain
-    await Future.delayed(Duration(seconds: 1));
     return false;
   }
 }
