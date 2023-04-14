@@ -3,8 +3,6 @@
 //     final promocion = promocionFromJson(jsonString);
 import 'dart:convert';
 
-import 'package:intl/intl.dart';
-
 List<DetalleCompra> detalleFromJson(String str) {
   final jsonData = json.decode(str);
   return new List<DetalleCompra>.from(

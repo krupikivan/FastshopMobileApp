@@ -28,7 +28,6 @@ class NotificationBloc with ChangeNotifier {
   // Observable<List<Promocion>> get` allTodo => _todoFetcher.stream;
 
   getNotif() async {
-    print("Trayendo notificaciones");
     _loading = true;
     notifyListeners();
     List list = await _repository.fetchAllTodo();
