@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'compra_detail_page.dart';
+
 class CompraPage extends StatelessWidget {
   // var user
 
@@ -88,14 +90,13 @@ class CompraPage extends StatelessWidget {
               elevation: 5,
             ),
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => ShopDetailsListPage(
-              //         nombre: data[index].nombre,
-              //         idListado: data[index].idListado),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      CompraDetailPage(id: data[index].idCompra),
+                ),
+              );
             });
       },
     );

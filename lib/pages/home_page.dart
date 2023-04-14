@@ -84,10 +84,10 @@ class HomePageSample extends State<HomePage>
       await flutterLocalNotificationsPlugin.show(
         0,
         'Nueva Promocion',
-        '${data.last.promocion} - ${data.last.producto}',
+        '${data.last.promocion} - ${data.last.showText}',
         platformChannelSpecifics,
         payload:
-            'Tenemos una nueva promocion del producto: ${data.last.producto}',
+            'Tenemos una nueva promocion: ${data.last.promocion} en ${data.last.showText}',
       );
     } else if (data.length < _prefs.promoCant) {
       _prefs.promoCant = data.length;

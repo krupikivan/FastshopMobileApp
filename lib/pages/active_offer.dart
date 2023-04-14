@@ -13,11 +13,14 @@ class ActiveOfferPage extends StatelessWidget {
         //cuando el valor sale afuera del stream largamos la lista por pantalla
         builder: (context, snapshot, _) {
           //Aca largamos la lista a la pantalla
-          return snapshot.promociones.length == 0
-              ? Center(
-                  child: Text('Sin promociones',
-                      style: Theme.of(context).textTheme.headline4))
-              : buildList(snapshot.promociones);
+          if (snapshot.firstLoading)
+            return Center(child: CircularProgressIndicator());
+          else
+            return snapshot.promociones.length == 0
+                ? Center(
+                    child: Text('Sin promociones',
+                        style: Theme.of(context).textTheme.headline4))
+                : buildList(snapshot.promocionesOrdered);
         },
       ),
     );

@@ -232,8 +232,10 @@ class BlocCartPageState extends State<BlocCartPage> {
       List<Promocion> list) async {
     try {
       String barcode = await BarcodeScanner.scan();
-      // String barcode = '7790895067556';
       print(barcode);
+      if (barcode[0] == '0') {
+        barcode = barcode.substring(1);
+      }
       Producto producto = await _repo.fetchProductScanned(barcode);
       _cartBloc.cartAddition.add(CartAddition(producto));
       List<int> _list = [];

@@ -18,20 +18,19 @@ class PromoCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           new Text(promocion.promocion,
+              textAlign: TextAlign.center,
               style: new TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.white)),
-          FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text(
-              promocion.producto,
-              textAlign: TextAlign.center,
-              style: new TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
+          Text(
+            promocion.showText,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            style: new TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
           ),
           Text(
             'Valido hasta ' + promocion.fechaInicio.toString(),

@@ -7,8 +7,14 @@ class PromoBloc with ChangeNotifier {
   // final _todoFetcher = PublishSubject<List<Promocion>>();
   List<Promocion> _promociones = [];
   bool _loading = false;
+  bool firstLoading = true;
   bool get loading => _loading;
   List<Promocion> get promociones => _promociones;
+  List<Promocion> get promocionesOrdered {
+    List<Promocion> _ordered = List.from(_promociones);
+    _ordered.sort((a, b) => a.prioridad.compareTo(b.prioridad));
+    return _ordered;
+  }
 
   PromoBloc.init() {
     getPromos();
@@ -31,6 +37,7 @@ class PromoBloc with ChangeNotifier {
     _loading = true;
     notifyListeners();
     List list = await _repository.fetchAllTodo();
+    firstLoading = false;
     promociones = list;
     _loading = false;
   }

@@ -17,34 +17,61 @@ String promocionToJson(List<Promocion> data) {
 class Promocion {
   final int idPromocion;
   final int idProducto;
+  final int prioridad;
+  final int idCategoria;
   final String fechaFin;
   final String fechaInicio;
   final String producto;
+  final String categoria;
   final String promocion;
 
   Promocion({
     this.idPromocion,
     this.idProducto,
+    this.prioridad,
+    this.idCategoria,
     this.fechaFin,
     this.fechaInicio,
     this.producto,
     this.promocion,
+    this.categoria,
   });
+
+  String get showText {
+    if (producto.isEmpty) {
+      return categoria;
+    }
+    return producto;
+  }
+
+  bool get isProducto {
+    if (producto.isEmpty) {
+      return false;
+    }
+    return true;
+  }
 
   factory Promocion.fromJson(Map<String, dynamic> json) => new Promocion(
         idPromocion: json["idPromocion"],
         idProducto: json["IdProducto"],
+        prioridad: json["Prioridad"],
+        idCategoria: json["IdCategoria"],
         fechaFin: json["fechaFin"],
         fechaInicio: json["fechaInicio"],
         producto: json["producto"],
+        categoria: json["categoria"],
         promocion: json["promocion"],
       );
 
   Map<String, dynamic> toJson() => {
         "idPromocion": idPromocion,
+        "idProducto": idProducto,
+        "idCategoria": idCategoria,
+        "prioridad": prioridad,
         "fechaFin": fechaFin,
         "fechaInicio": fechaInicio,
         "producto": producto,
+        "categoria": categoria,
         "promocion": promocion,
       };
 }

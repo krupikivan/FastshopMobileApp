@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:fastshop/connection.dart';
 import 'package:fastshop/models/compra.dart';
+import 'package:fastshop/models/detalle_compra.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' show Client;
 import 'dart:async';
@@ -11,6 +12,7 @@ class CompraProvider {
 
   //URL para traer los nombres de los listados del cliente logueado
   final _url = con.getUrl() + '/compra/readCliente.php';
+  final _urlDetalle = con.getUrl() + '/compra/readCompra.php';
   final _urlNew = con.getUrl() + '/compra/insertCompra.php';
 
   var headers = {"accept": "application/json"};
@@ -45,6 +47,18 @@ class CompraProvider {
       // return listado;
     } else {
       throw new Exception('Error!');
+    }
+  }
+
+  //Este es nuestro metodo para mandarle el usuario activo y que devuelva los nombres de los listados
+  Future<List<DetalleCompra>> fetchDetalleCompras(int id) async {
+    final response = await client.get(_urlDetalle + "?idCompra=$id");
+    if (response.statusCode == 200) {
+      print(response.body);
+      return await compute(detalleFromJson, response.body);
+    } else {
+      print('No encontro compras');
+      throw Exception('No encontro detalle de la compra');
     }
   }
 }
