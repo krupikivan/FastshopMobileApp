@@ -57,14 +57,8 @@ class _ScannerPageState extends State<ScannerPage> {
   Future scan(CartBloc _cartBloc, ProductoRepository _repo) async {
     try {
       String barcode = await BarcodeScanner.scan();
-      //TODO arreglar e implementar bloc en esta parte
       Producto producto = await _repo.fetchProductScanned(barcode);
-      _cartBloc.cartAddition.add(CartAddition(producto));
-      //TODO arreglar e implementar bloc en esta parte
-      // setState(() {
-      //   this.barcode = barcode;
-      //   bloc.addScanProduct(barcode);
-      // });
+      _cartBloc.addUpdateCart(producto);
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {

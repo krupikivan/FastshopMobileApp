@@ -39,7 +39,7 @@ class ItemTile extends StatelessWidget {
                         right: 2,
                         child: FittedBox(
                           child: Text(
-                            '\$${num.parse((item.monto).toStringAsFixed(2))}',
+                            '\$${num.parse((item.promoPrice).toStringAsFixed(2))}',
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
@@ -85,7 +85,7 @@ class ItemTile extends StatelessWidget {
           );
         }).then((int value) {
       if (value != null) {
-        cartBloc.cartUpdate.add(CartAddition(item.product, value));
+        cartBloc.updateCount(item.product, value);
       }
     });
   }
@@ -98,7 +98,7 @@ class ItemTile extends StatelessWidget {
         color: fPromoCardBackColor,
       ),
       onPressed: () {
-        cartBloc.cartAddition.add(CartAddition(item.product, -item.count));
+        cartBloc.removeItem(item.product);
       },
     );
   }

@@ -31,7 +31,7 @@ class ShoppingBloc implements BlocBase {
 
   void addScanProduct(barcode) async {
     Producto producto = await _repo.fetchProductScanned(barcode);
-    _cartBloc.cartAddition.add(CartAddition(producto));
+    _cartBloc.addUpdateCart(producto);
   }
 
   // void _loadShoppingItems() async {

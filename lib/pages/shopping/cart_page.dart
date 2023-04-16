@@ -100,24 +100,16 @@ class BlocCartPageState extends State<BlocCartPage> {
                       child: Column(
                         children: <Widget>[
                           ListTile(
-                            title: StreamBuilder<double>(
-                              stream: cart.itemsTotalPrice,
-                              initialData: 0,
-                              builder: (context, snapshot) => Text(
-                                "Total: \$${num.parse(snapshot.data.toStringAsFixed(2))}",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900, fontSize: 15),
-                              ),
+                            title: Text(
+                              "Total: \$${num.parse(cart.totalPrice.toStringAsFixed(2))}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w900, fontSize: 15),
                             ),
-                            subtitle: StreamBuilder<int>(
-                              stream: cart.itemCount,
-                              initialData: 0,
-                              builder: (context, snapshot) => Text(
-                                "Cant de prod.: ${snapshot.data}",
-                                // style: TextStyle(
-                                //     fontWeight: FontWeight.w900,
-                                //     fontSize: 25),
-                              ),
+                            subtitle: Text(
+                              "Cant de prod.: ${snapshot.data.fold(0, (p, e) => p + e.count)}",
+                              // style: TextStyle(
+                              //     fontWeight: FontWeight.w900,
+                              //     fontSize: 25),
                             ),
                             trailing: InkWell(
                               onTap: () => _showQRCoder(context, cart),
@@ -200,24 +192,17 @@ class BlocCartPageState extends State<BlocCartPage> {
               ),
             ),
             actions: <Widget>[
-              StreamBuilder<List<CartItem>>(
-                  stream: _cartBloc.items,
-                  builder: (context, snapshot) {
-                    return OutlinedButton(
-                        onPressed: () {
-                          //Borra el carrito de compras
-                          snapshot.data.forEach((element) {
-                            _cartBloc.cartAddition.add(
-                                CartAddition(element.product, -element.count));
-                          });
-                          var userData = Provider.of<UserRepository>(context,
-                              listen: false);
-                          blocCompra.saveCompras(_cartBloc.productsId,
-                              userData.userData.idCliente);
-                          Navigator.pop(context);
-                        },
-                        child: Text('Finalizar'));
-                  }),
+              OutlinedButton(
+                  onPressed: () {
+                    //Borra el carrito de compras
+                    _cartBloc.removeAll();
+                    var userData =
+                        Provider.of<UserRepository>(context, listen: false);
+                    blocCompra.saveCompras(
+                        _cartBloc.productsId, userData.userData.idCliente);
+                    Navigator.pop(context);
+                  },
+                  child: Text('Finalizar')),
               OutlinedButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -232,16 +217,24 @@ class BlocCartPageState extends State<BlocCartPage> {
       List<Promocion> list) async {
     try {
       String barcode = await BarcodeScanner.scan();
-      print(barcode);
       if (barcode[0] == '0') {
         barcode = barcode.substring(1);
       }
       Producto producto = await _repo.fetchProductScanned(barcode);
-      _cartBloc.cartAddition.add(CartAddition(producto));
-      List<int> _list = [];
-      list.forEach((e) => _list.add(e.idProducto));
-      if (_list.isNotEmpty && _list.contains(producto.idProducto)) {
-        _cartBloc.setPromoItem(producto);
+      _cartBloc.addUpdateCart(producto);
+      List<int> _listP = [];
+      List<int> _listC = [];
+      list.forEach((e) {
+        if (e.idProducto > 0) {
+          _listP.add(e.idProducto);
+        } else if (e.idCategoria > 0) {
+          _listC.add(e.idCategoria);
+        }
+      });
+      if (_listP.isNotEmpty && _listP.contains(producto.idProducto)) {
+        final promo =
+            list.firstWhere((e) => e.idProducto == producto.idProducto);
+        _cartBloc.setPromoItem(producto, promo);
         showDialog(
             context: context,
             builder: (context) {
@@ -249,6 +242,27 @@ class BlocCartPageState extends State<BlocCartPage> {
                 title: Text('Producto con Promocion!'),
                 content: Text(
                     'El producto escaneado ${producto.descripcion} tiene promocion asignada de tipo ${list.firstWhere((e) => e.idProducto == producto.idProducto).promocion}'),
+                actions: <Widget>[
+                  OutlinedButton(
+                    child: const Text('Ok'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            });
+      } else if (_listC.isNotEmpty && _listC.contains(producto.idCategoria)) {
+        final promo =
+            list.firstWhere((e) => e.idCategoria == producto.idCategoria);
+        _cartBloc.setPromoItem(producto, promo);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Producto con Promocion!'),
+                content: Text(
+                    'El producto escaneado ${producto.descripcion} tiene promocion asignada de tipo ${list.firstWhere((e) => e.idCategoria == producto.idCategoria).promocion}'),
                 actions: <Widget>[
                   OutlinedButton(
                     child: const Text('Ok'),

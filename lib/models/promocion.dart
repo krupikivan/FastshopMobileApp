@@ -17,6 +17,9 @@ String promocionToJson(List<Promocion> data) {
 class Promocion {
   final int idPromocion;
   final int idProducto;
+  final double formula;
+  final int productoAplicado;
+  final int cantidadProductos;
   final int prioridad;
   final int idCategoria;
   final String fechaFin;
@@ -27,7 +30,10 @@ class Promocion {
 
   Promocion({
     this.idPromocion,
+    this.formula,
+    this.productoAplicado,
     this.idProducto,
+    this.cantidadProductos,
     this.prioridad,
     this.idCategoria,
     this.fechaFin,
@@ -55,6 +61,9 @@ class Promocion {
         idPromocion: json["idPromocion"],
         idProducto: json["IdProducto"],
         prioridad: json["Prioridad"],
+        cantidadProductos: json["cantidadProductos"],
+        formula: json["formula"],
+        productoAplicado: json["productoAplicado"],
         idCategoria: json["IdCategoria"],
         fechaFin: json["fechaFin"],
         fechaInicio: json["fechaInicio"],
@@ -66,6 +75,9 @@ class Promocion {
   Map<String, dynamic> toJson() => {
         "idPromocion": idPromocion,
         "idProducto": idProducto,
+        "formula": formula,
+        "productoAplicado": productoAplicado,
+        "cantidadProductos": cantidadProductos,
         "idCategoria": idCategoria,
         "prioridad": prioridad,
         "fechaFin": fechaFin,

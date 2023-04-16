@@ -153,7 +153,7 @@ class HomePageSample extends State<HomePage>
         initialIndex: widget.index,
         child: Consumer<PromoBloc>(builder: (context, snapshot, _) {
           if (snapshot.promociones.isNotEmpty) {
-            _cartBloc.addPromos.add(snapshot.promociones);
+            _cartBloc.promos.addAll(snapshot.promociones);
             _showNotification(snapshot.promociones);
           }
           return Scaffold(

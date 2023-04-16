@@ -12,6 +12,7 @@ String productoToJson(List<Producto> data) {
 
 class Producto extends Object {
   final int idProducto;
+  final int idCategoria;
   final String descripcion;
   final String categoria;
   final String marca;
@@ -19,6 +20,7 @@ class Producto extends Object {
 
   Producto({
     this.idProducto,
+    this.idCategoria,
     this.descripcion,
     this.categoria,
     this.marca,
@@ -27,6 +29,7 @@ class Producto extends Object {
 
   Producto.fromJson(Map<String, dynamic> json)
       : idProducto = json["idProducto"] as int,
+        idCategoria = json["idCategoria"] as int,
         descripcion = json["descripcion"],
         categoria = json["categoria"],
         marca = json["marca"],
@@ -41,6 +44,7 @@ class Producto extends Object {
 
   Map<String, dynamic> toJson() => {
         "idProducto": idProducto,
+        "idCategoria": idCategoria,
         "descripcion": descripcion,
         "categoria": categoria,
         "marca": marca,

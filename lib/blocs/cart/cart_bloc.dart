@@ -18,77 +18,80 @@ class CartAddition {
 class CartBloc implements BlocBase {
   //list of all items part of the cart
   // Set<Product> _cart = Set<Product>();
-  final Cart _cart = Cart();
+  // final Cart _cart = Cart();
 
   final BehaviorSubject<List<CartItem>> _items =
       BehaviorSubject<List<CartItem>>.seeded([]);
-
-  final _promos = BehaviorSubject<List<Promocion>>.seeded([]);
+  final List<CartItem> cartItemList = [];
+  // final _promos = BehaviorSubject<List<Promocion>>.seeded([]);
 
   final BehaviorSubject<int> _itemCount = BehaviorSubject<int>.seeded(0);
+  // final StreamController<double> _itemTotalPrice =
+  //     BehaviorSubject<double>.seeded(0);
 
-  final StreamController<double> _itemTotalPrice =
-      BehaviorSubject<double>.seeded(0);
+  // final BehaviorSubject<CartAddition> _cartAdditionController =
+  //     BehaviorSubject<CartAddition>();
 
-  final StreamController<CartAddition> _cartAdditionController =
-      StreamController<CartAddition>();
-
-  final StreamController<CartAddition> _cartUpdateController =
-      StreamController<CartAddition>();
+  // final StreamController<CartAddition> _cartUpdateController =
+  //     StreamController<CartAddition>();
 
   CartBloc() {
-    _cartAdditionController.stream.listen((addition) {
-      int currentCount = _cart.itemCount;
-      // double currentTotalPrice = _cart.itemTotalPrice;
-      _cart.add(addition.product, addition.count);
-      _items.add(_cart.items);
-      int updatedCount = _cart.itemCount;
-      double currentTotalPrice =
-          _calculateTotalPrice(_cart, _promos.stream.value);
-      // double updatedTotalPrice = _cart.itemTotalPrice;
-      double updatedTotalPrice =
-          _calculateTotalPrice(_cart, _promos.stream.value);
-      if (updatedCount != currentCount ||
-          updatedTotalPrice != currentTotalPrice) {
-        _itemCount.add(updatedCount);
-        _itemTotalPrice.add(updatedTotalPrice);
-      }
-    });
-    _cartUpdateController.stream.listen((addition) {
-      int currentCount = _cart.itemCount;
-      // double currentTotalPrice = _cart.itemTotalPrice;
-      _cart.update(addition.product, addition.count);
-      _items.add(_cart.items);
-      int updatedCount = _cart.itemCount;
-      double currentTotalPrice =
-          _calculateTotalPrice(_cart, _promos.stream.value);
-      // double updatedTotalPrice = _cart.itemTotalPrice;
-      double updatedTotalPrice =
-          _calculateTotalPrice(_cart, _promos.stream.value);
-      if (updatedCount != currentCount ||
-          updatedTotalPrice != currentTotalPrice) {
-        _itemCount.add(updatedCount);
-        _itemTotalPrice.add(updatedTotalPrice);
-      }
-    });
+    // _cartAdditionController.stream.listen((addition) {
+    //   int currentCount = _cart.itemCount;
+    //   // double currentTotalPrice = _cart.itemTotalPrice;
+    //   _cart.add(addition.product, addition.count);
+    //   _items.add(_cart.items);
+    //   int updatedCount = _cart.itemCount;
+    //   double currentTotalPrice =
+    //       _calculateTotalPrice(_cart, _promos.stream.value);
+    //   // double updatedTotalPrice = _cart.itemTotalPrice;
+    //   double updatedTotalPrice =
+    //       _calculateTotalPrice(_cart, _promos.stream.value);
+    //   if (updatedCount != currentCount ||
+    //       updatedTotalPrice != currentTotalPrice) {
+    //     _itemCount.add(updatedCount);
+    //     _itemTotalPrice.add(updatedTotalPrice);
+    //   }
+    // });
+    // _cartUpdateController.stream.listen((addition) {
+    //   int currentCount = _cart.itemCount;
+    //   // double currentTotalPrice = _cart.itemTotalPrice;
+    //   _cart.update(addition.product, addition.count);
+    //   _items.add(_cart.items);
+    //   int updatedCount = _cart.itemCount;
+    //   double currentTotalPrice =
+    //       _calculateTotalPrice(_cart, _promos.stream.value);
+    //   // double updatedTotalPrice = _cart.itemTotalPrice;
+    //   double updatedTotalPrice =
+    //       _calculateTotalPrice(_cart, _promos.stream.value);
+    //   if (updatedCount != currentCount ||
+    //       updatedTotalPrice != currentTotalPrice) {
+    //     _itemCount.add(updatedCount);
+    //     _itemTotalPrice.add(updatedTotalPrice);
+    //   }
+    // });
   }
 
-  setPromoItem(Producto producto) {
-    items.listen((event) {
-      event.forEach((e) {
-        if (e.product.idProducto == producto.idProducto && e.count > 1) {
-          e.hasPromo = true;
-          if (e.count % 2 == 0) {
-            e.monto = e.product.precio * e.count * 0.5;
-          } else {
-            e.monto =
-                (e.product.precio * (e.count - 1) * 0.5) + e.product.precio;
-          }
-        } else if (e.product.idProducto == producto.idProducto) {
-          e.monto = e.product.precio * e.count;
-        }
-      });
+  setPromoItem(Producto producto, Promocion promo) {
+    final cartItem = cartItemList
+        .firstWhere((e) => e.product.idProducto == producto.idProducto);
+    final index = cartItemList
+        .indexWhere((e) => e.product.idProducto == producto.idProducto);
+    cartItemList.remove(cartItem);
+    cartItem.promo = promo;
+    cartItemList.insert(index, cartItem);
+    _items.add(cartItemList);
+  }
+
+  Promocion getPromoFromProduct(Producto producto, List<Promocion> list) {
+    list.forEach((e) {
+      if (e.idProducto == producto.idProducto) {
+        return e;
+      } else if (e.idCategoria == producto.idCategoria) {
+        return e;
+      }
     });
+    return null;
   }
 
   double _calculateTotalPrice(Cart cart, List<Promocion> list) {
@@ -110,36 +113,79 @@ class CartBloc implements BlocBase {
     return total;
   }
 
-  Sink<CartAddition> get cartAddition => _cartAdditionController.sink;
+  // Sink<CartAddition> get cartAddition => _cartAdditionController.sink;
 
-  Sink<List<Promocion>> get addPromos => _promos.sink;
+  void removeItem(Producto product) {
+    final cartAddItem = cartItemList.firstWhere((e) => e.product == product);
+    cartItemList.remove(cartAddItem);
+    _items.add(cartItemList);
+    _itemCount.add(cartItemList.fold(0, (p, e) => p + e.count));
+  }
 
-  Sink<CartAddition> get cartUpdate => _cartUpdateController.sink;
+  List<int> get productsId =>
+      cartItemList.map((e) => e.product.idProducto).toList();
+
+  double get totalPrice {
+    double total = 0;
+    cartItemList.forEach((e) {
+      total += e.promoPrice;
+    });
+    return total;
+  }
+
+  void removeAll() {
+    cartItemList.clear();
+    _itemCount.add(0);
+  }
+
+  void updateCount(Producto product, int value) {
+    final cartItem = cartItemList.firstWhere((e) => e.product == product);
+    final index = cartItemList.indexWhere((e) => e.product == product);
+    cartItem.count = value;
+    cartItemList.remove(cartItem);
+    cartItemList.insert(index, cartItem);
+    _items.add(cartItemList);
+    _itemCount.add(cartItemList.fold(0, (p, e) => p + e.count));
+  }
+
+  void addUpdateCart(Producto product) {
+    final exist = cartItemList.where((e) => e.product == product).isNotEmpty;
+    if (exist) {
+      final cartItem = cartItemList.firstWhere((e) => e.product == product);
+      final index = cartItemList.indexWhere((e) => e.product == product);
+      cartItemList.remove(cartItem);
+      cartItem.count++;
+      cartItemList.insert(index, cartItem);
+    } else {
+      cartItemList.add(CartItem(product: product));
+    }
+    _items.add(cartItemList);
+    _itemCount.add(cartItemList.fold(0, (p, e) => p + e.count));
+  }
+
+  List<Promocion> promos = [];
 
   Stream<int> get itemCount => _itemCount.stream;
-
-  Stream<double> get itemsTotalPrice => _itemTotalPrice.stream;
-
   Stream<List<CartItem>> get items => _items.stream;
 
-  List<int> get productsId {
-    List<int> ids = [];
-    for (var item in _items.stream.value) {
-      for (var i = 0; i < item.count; i++) {
-        ids.add(item.product.idProducto);
-      }
-    }
-    return ids;
-  }
+  // List<int> get productsId {
+  //   List<int> ids = [];
+  //   for (var item in _items.stream.value) {
+  //     for (var i = 0; i < item.count; i++) {
+  //       ids.add(item.product.idProducto);
+  //     }
+  //   }
+  //   return ids;
+  // }
 
   @override
   void dispose() {
     _items.close();
-    _promos.close();
+    // _promos.close();
     _itemCount.close();
-    _itemTotalPrice.close();
-    _cartAdditionController.close();
-    _cartUpdateController.close();
+    // _itemTotalPrice.close();
+    // _cartAdditionController.close();
+    // _cartUpdateController.close();
   }
 }
 
