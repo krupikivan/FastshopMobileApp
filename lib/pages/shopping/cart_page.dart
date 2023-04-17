@@ -195,11 +195,11 @@ class BlocCartPageState extends State<BlocCartPage> {
               OutlinedButton(
                   onPressed: () {
                     //Borra el carrito de compras
-                    _cartBloc.removeAll();
                     var userData =
                         Provider.of<UserRepository>(context, listen: false);
                     blocCompra.saveCompras(
                         _cartBloc.productsId, userData.userData.idCliente);
+                    _cartBloc.removeAll();
                     Navigator.pop(context);
                   },
                   child: Text('Finalizar')),

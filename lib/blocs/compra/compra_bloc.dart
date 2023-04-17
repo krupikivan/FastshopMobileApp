@@ -24,6 +24,7 @@ class CompraBloc {
   }
 
   saveCompras(List<int> list, int idCliente) async {
+    if (list.isEmpty) return;
     await _repository.saveCompra(list, idCliente);
   }
 

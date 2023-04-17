@@ -36,7 +36,6 @@ class CompraProvider {
       'idCliente': idCliente,
       'listadoProductos': list,
     };
-    print(jsonEncode(body));
     final response = await client.post(_urlNew, body: jsonEncode(body));
     if (response.statusCode == 200) {
       // List<Listado> listado = listadoFromJson(response.body);
