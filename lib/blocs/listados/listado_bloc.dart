@@ -2,21 +2,36 @@ import 'package:fastshop/repos/listado_repository.dart';
 import 'package:fastshop/models/models.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../preferences.dart';
+
 class ListBloc {
   final _listRepository = ListadoRepository();
   final _listFetcher = PublishSubject<List<Listado>>();
   final _categoriesFetcher = PublishSubject<List<ListCategory>>();
-
+  Listado selected;
   //Con stream escuchamos y con sink agregamos (es como una pila)
   Observable<List<Listado>> get userListNames => _listFetcher.stream;
+
+  Stream<List<Listado>> get list async* {
+    List<Listado> list = await _listRepository.fetchListNames();
+    yield list;
+  }
 
   Observable<List<ListCategory>> get listCategoryName =>
       _categoriesFetcher.stream;
 
   //Traemos los listados del usuario logueado
-  fetchUserListNames(var user) async {
-    List<Listado> list = await _listRepository.fetchListNames(user);
-    _listFetcher.sink.add(list);
+  fetchUserListNames() async {
+    try {
+      List<Listado> list = await _listRepository.fetchListNames();
+      _listFetcher.sink.add(list);
+    } catch (_) {
+      return;
+    }
+  }
+
+  setListado(Listado listado) {
+    selected = listado;
   }
 
   //Traemos las categorias del listado seleccionado

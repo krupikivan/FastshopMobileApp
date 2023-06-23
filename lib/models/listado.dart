@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 List<Listado> listadoFromJson(String str) {
   final jsonData = json.decode(str);
   return new List<Listado>.from(jsonData.map((x) => Listado.fromJson(x)));
@@ -14,7 +16,7 @@ String listadoToJson(List<Listado> data) {
   return json.encode(dyn);
 }
 
-class Listado {
+class Listado extends Equatable {
   int idListado;
   String nombre;
   String producto;
@@ -44,4 +46,13 @@ class Listado {
         "cantidad": cantidad,
         "cliente": cliente,
       };
+
+  @override
+  List get props => [
+        idListado,
+        nombre,
+        producto,
+        cantidad,
+        cliente,
+      ];
 }

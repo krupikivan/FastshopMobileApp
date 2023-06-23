@@ -1,4 +1,3 @@
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 saveLogout() async {
@@ -9,4 +8,5 @@ saveLogout() async {
   await preferences.setString('email', "");
   await preferences.setString('token', "");
   await preferences.setInt('idCliente', 0);
+  await preferences.setInt('index', 0);
 }

@@ -2,7 +2,8 @@ import 'dart:convert';
 
 List<ListCategory> listCategoriesFromJson(String str) {
   final jsonData = json.decode(str);
-  return new List<ListCategory>.from(jsonData.map((x) => ListCategory.fromJson(x)));
+  return new List<ListCategory>.from(
+      jsonData.map((x) => ListCategory.fromJson(x)));
 }
 
 String listCategoriesToJson(List<ListCategory> data) {
@@ -20,12 +21,12 @@ class ListCategory {
   });
 
   factory ListCategory.fromJson(Map<String, dynamic> json) => new ListCategory(
-    idCategoria: json["idCategoria"],
-    descripcion: json["descripcion"],
-  );
+        idCategoria: json["idCategoria"].toString(),
+        descripcion: json["descripcion"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "idCategoria": idCategoria,
-    "descripcion": descripcion,
-  };
+        "idCategoria": idCategoria,
+        "descripcion": descripcion,
+      };
 }

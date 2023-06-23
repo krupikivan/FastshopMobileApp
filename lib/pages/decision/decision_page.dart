@@ -8,6 +8,8 @@ import 'package:fastshop/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fastshop/user_repository/user_repository.dart';
 
+import '../../preferences.dart';
+
 class DecisionPage extends StatefulWidget {
   //Para el username
   final UserRepository userRepository;
@@ -28,6 +30,7 @@ class DecisionPageState extends State<DecisionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _prefs = Preferences();
     AuthenticationBloc bloc = BlocProvider.of<AuthenticationBloc>(context);
     if (bloc.userRepository.token != "") {
       bloc.emitEvent(
@@ -40,10 +43,11 @@ class DecisionPageState extends State<DecisionPage> {
             oldAuthenticationState = state;
             if (state.isAuthenticated) {
               _redirectToPage(
-                  context,
-                  HomePage(
-                    index: 0,
-                  ));
+                context,
+                HomePage(
+                  index: _prefs.index,
+                ),
+              );
               // )
               // );
             } else if (state.isAuthenticating || state.hasFailed) {

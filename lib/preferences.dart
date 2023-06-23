@@ -23,6 +23,14 @@ class Preferences {
     return _prefs.getInt('notifCant') ?? 0;
   }
 
+  get index {
+    return _prefs.getInt('index') ?? 0;
+  }
+
+  get idCliente {
+    return _prefs.getInt('idCliente');
+  }
+
   List<String> get notif {
     return _prefs.getStringList('notif') ?? [];
   }
@@ -37,5 +45,9 @@ class Preferences {
 
   set notifCant(int value) {
     _prefs.setInt('notifCant', value);
+  }
+
+  set index(int value) {
+    _prefs.setInt('index', value);
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:fastshop/connection.dart';
 import 'package:fastshop/models/models.dart';
+import 'package:fastshop/preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' show Client;
 import 'dart:async';
@@ -24,9 +25,10 @@ class ListadoProvider {
   final _urlDeleteList = con.getUrl() + '/listado/deleteListadoCompra.php';
 
   var headers = {"accept": "application/json"};
-
+  final _prefs = Preferences();
   //Este es nuestro metodo para mandarle el usuario activo y que devuelva los nombres de los listados
-  Future<List<Listado>> fetchUserListNames(var id) async {
+  Future<List<Listado>> fetchUserListNames() async {
+    final id = _prefs.idCliente;
     final response = await client.get(_url + "?idCliente=$id");
     if (response.statusCode == 200) {
       print(response.body);

@@ -3,7 +3,9 @@ import 'package:fastshop/bloc_helpers/bloc_provider.dart';
 import 'package:fastshop/blocs/cart/cart_bloc.dart';
 import 'package:fastshop/blocs/compra/compra_bloc.dart';
 import 'package:fastshop/blocs/home/promo_bloc.dart';
+import 'package:fastshop/blocs/listados/listado_bloc.dart';
 import 'package:fastshop/design/colors.dart';
+import 'package:fastshop/models/listado.dart';
 import 'package:fastshop/models/producto.dart';
 import 'package:fastshop/models/promocion.dart';
 import 'package:fastshop/repos/producto_repository.dart';
@@ -41,6 +43,74 @@ class BlocCartPageState extends State<BlocCartPage> {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    StreamBuilder(
+                      stream: blocUserList.list,
+                      builder:
+                          (context, AsyncSnapshot<List<Listado>> snaplist) =>
+                              Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        width: 280,
+                        height: 50,
+                        child: !snaplist.hasData
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: primaryColor,
+                                ),
+                              )
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  DropdownButton<Listado>(
+                                    underline: Container(),
+                                    dropdownColor: Colors.white,
+                                    iconEnabledColor: primaryColor,
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    hint: Text(
+                                      'Seleccione un listado',
+                                      style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    value: blocUserList.selected,
+                                    onChanged: (newValue) {
+                                      blocUserList.setListado(newValue);
+                                      setState(() {});
+                                    },
+                                    items: snaplist.data.map((item) {
+                                      return DropdownMenuItem<Listado>(
+                                        child: new Text(
+                                            item.nombre[0].toUpperCase() +
+                                                item.nombre.substring(1)),
+                                        value: item,
+                                      );
+                                    }).toList(),
+                                  ),
+                                  if (blocUserList.selected != null)
+                                    InkWell(
+                                        onTap: () {
+                                          blocUserList.setListado(null);
+                                          setState(() {});
+                                        },
+                                        child: Icon(Icons.clear,
+                                            color: primaryColor))
+                                ],
+                              ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Consumer<PromoBloc>(
                       builder: (context, promoSnap, _) => InkWell(
                         onTap: () => scan(cart, _repo, promoSnap.promociones),

@@ -117,27 +117,7 @@ class HomePageSample extends State<HomePage>
         isScrollable: true,
         indicatorSize: TabBarIndicatorSize.tab,
         onTap: (index) {
-          var content = "";
-          switch (index) {
-            case 0:
-              content = "Promociones";
-              break;
-            case 1:
-              content = "Categorias";
-              break;
-            case 2:
-              content = "Carrito";
-              break;
-            case 3:
-              content = "Listado";
-              break;
-            case 4:
-              content = "Mis Compras";
-              break;
-            default:
-              content = "Other";
-              break;
-          }
+          _prefs.index = index;
         },
       );
 

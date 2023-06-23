@@ -1,40 +1,94 @@
+import 'package:fastshop/bloc_helpers/bloc_provider.dart';
+import 'package:fastshop/blocs/cart/cart_bloc.dart';
 import 'package:fastshop/design/colors.dart';
 import 'package:fastshop/models/models.dart';
-import 'package:fastshop/user_repository/user_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fastshop/blocs/listados/listado_bloc.dart';
 
 import 'package:fastshop/pages/listados/shop_details_list_page.dart';
-import 'package:provider/provider.dart';
 
 class ShopListPage extends StatelessWidget {
   // var user
 
   @override
   Widget build(BuildContext context) {
-    var userData = Provider.of<UserRepository>(context, listen: false);
-    blocUserList.fetchUserListNames(userData.userData.idCliente);
+    final cart = BlocProvider.of<CartBloc>(context);
+
     // fetchUserListNames(userData.userData.idCliente);
-    return StreamBuilder(
-      //Estamos escuchando al stream,
-      //cuando el valor sale afuera del stream largamos la lista por pantalla
-      stream: blocUserList.userListNames,
-      builder: (context, AsyncSnapshot<List<Listado>> snapshot) {
-        if (snapshot.hasData) {
-          //Aca largamos la lista a la pantalla
-          if (snapshot.data.isEmpty) {
-            return Text('Sin listados',
-                style: Theme.of(context).textTheme.headline4);
-          } else {
-            return buildList(snapshot.data);
+    if (cart.isBuying && blocUserList.selected != null) {
+      blocUserList.fetchListCategories(blocUserList.selected.idListado);
+      return StreamBuilder(
+        stream: blocUserList.listCategoryName,
+        builder: (context, AsyncSnapshot<List<ListCategory>> snapshot) {
+          if (snapshot.hasData) {
+            return Column(
+              children: [
+                Text(
+                  "Listado: ${blocUserList.selected.nombre}",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return new Container(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text(snapshot.data[index].descripcion),
+                              trailing: cart.checkCategoryIncluded(
+                                      snapshot.data[index].idCategoria)
+                                  ? Icon(
+                                      Icons.check_circle,
+                                      color: Colors.green,
+                                    )
+                                  : SizedBox.shrink(),
+                            ),
+                            Divider(
+                              color: Colors.black45,
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return Text('Error es:${snapshot.error}');
           }
-        } else if (snapshot.hasError) {
-          return Text('Error es:${snapshot.error}');
-        }
-        return Center(child: CircularProgressIndicator());
-      },
-    );
+          return Center(child: CircularProgressIndicator());
+        },
+      );
+    } else {
+      blocUserList.fetchUserListNames();
+
+      return StreamBuilder(
+        //Estamos escuchando al stream,
+        //cuando el valor sale afuera del stream largamos la lista por pantalla
+        stream: blocUserList.userListNames,
+        builder: (context, AsyncSnapshot<List<Listado>> snapshot) {
+          if (snapshot.hasData) {
+            //Aca largamos la lista a la pantalla
+            if (snapshot.data.isEmpty) {
+              return Text('Sin listados',
+                  style: Theme.of(context).textTheme.headline4);
+            } else {
+              return buildList(snapshot.data);
+            }
+          } else if (snapshot.hasError) {
+            return Text('Error es:${snapshot.error}');
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      );
+    }
     //floatingActionButton: FloatingActionButton.extended(onPressed: null, backgroundColor: Colors.blueAccent, icon: Icon(Icons.add), label: Text('Nuevo'))
   }
 
